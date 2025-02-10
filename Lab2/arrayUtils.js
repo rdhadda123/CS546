@@ -107,15 +107,10 @@ export let numberOfOccurrences = (...arrays) => {
   })
 
   const flattened = arrays.flat(Infinity)
-  let resultObj = {}
-
-  for (let i = 0; i < flattened.length; i++){
-    resultObj[flattened[i]] = 0
-  }
-
-  flattened.forEach((element) => {
-    resultObj[element] += 1
-  })
+  const resultObj = flattened.reduce((res, element) => {
+    res[element] = (res[element] || 0) + 1
+    return res
+  }, {})
 
   return resultObj
 };
