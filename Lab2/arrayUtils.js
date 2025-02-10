@@ -12,22 +12,22 @@ export let arrayStats = (array) => {
       throw `${value} is not a number`
   })
 
-  const sortedArray = array.sort()
-  const result = {mean: 0, median: 0, mode: 0, range: 0, minimum: 0, maximum: 0, count: 0, sum: 0}
-  const totalSum = 0.0
+  const sortedArray = array.sort((a, b) => a - b)
+  let result = {mean: 0, median: 0, mode: 0, range: 0, minimum: 0, maximum: 0, count: 0, sum: 0}
+  let totalSum = 0.0
   array.forEach((value) => {
     totalSum += value
   })
 
   function getMedian(array) {
-    const mid = Math.floor(array.length / 2)
+    let mid = Math.floor(array.length / 2)
     return array.length % 2 === 0 ? (array[mid - 1] + array[mid]) / 2 : array[mid]
   }
 
   function getMode(array) {
-    const mode = [], maxCounter = 1, counter = 1
+    let mode = [], maxCounter = 1, counter = 1
 
-    for (const i = 1; i < array.length; i += 1){
+    for (let i = 1; i < array.length; i += 1){
       if (array[i] === array[i - 1])
         counter++
       else
@@ -35,13 +35,14 @@ export let arrayStats = (array) => {
 
       if (counter > maxCounter){
         maxCounter = counter
-        mode = array[i]
-      } else if (counter == maxCounter) {
-        mode.push(array[i])
+        mode = [array[i]]
+      } else if (counter === maxCounter) {
+        if (!mode.includes(array[i]))
+          mode.push(array[i])
       }
     }
 
-    if (mode.length === 0)
+    if (maxCounter === 1)
       return 0
     else if (mode.length === 1)
       return mode[0]
@@ -86,4 +87,36 @@ export let mergeCommonElements = (...arrays) => {
 
 export let numberOfOccurrences = (...arrays) => {
   //this function takes in a variable number of arrays that's what the ...arrays signifies
+  if (!arrays)
+    throw "Input needs to be arrays"
+  arrays.forEach((array) => {
+    if (!Array.isArray(array))
+      throw `${array} is not an array`
+    array.forEach((value) => {
+      if (array.length === 0)
+        throw `${array} needs to have at least one element`
+      if (!((typeof value === "number") || (typeof value === "string")))
+        throw `Each ${array} element needs to be a number or string`
+      if (typeof value == "string"){
+        value.split('').forEach((char) => {
+          if (char.toLowerCase() === char.toUpperCase())
+            throw `${char} is not a letter`
+        })
+      }
+    })
+  })
+
+  const flattened = arrays.flat(Infinity)
+  let resultObj = {}
+
+  for (let i = 0; i < flattened.length; i++){
+    resultObj[flattened[i]] = 0
+  }
+
+  flattened.forEach((element) => {
+    resultObj[element] += 1
+  })
+
+  return resultObj
 };
+
