@@ -18,6 +18,7 @@ export let commonKeysValues = (obj1, obj2) => {
 };
 
 export let calculateObject = (object, func) => {
+      let resultObj = {}
       if (!object)
             throw "Object does not exist"
       if (typeof object !== "object")
@@ -28,7 +29,9 @@ export let calculateObject = (object, func) => {
             if (typeof value !== "number") {
                 throw `Value of "${key}" must be a valid number`;
             }
+            const res = func(value)
+            resultObj[key] = Math.sqrt(res).toFixed(2)
       }
 
-      
+      return resultObj
 };
