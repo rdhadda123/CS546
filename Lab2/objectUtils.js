@@ -74,7 +74,7 @@ export let calculateObject = (object, func) => {
                 throw `Value of "${key}" must be a valid number`;
             }
             let res = func(value)
-            resultObj[key] = Math.sqrt(res).toFixed(2)
+            resultObj[key] = Number(Math.sqrt(res).toFixed(2))
       }
 
       return resultObj

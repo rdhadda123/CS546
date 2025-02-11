@@ -69,7 +69,7 @@ export let mergeCommonElements = (...arrays) => {
     if (!Array.isArray(array))
       throw `${array} is not an array`
     if (array.length === 0)
-      throw `${array} needs to have atleast one element`
+      throw `Nested array [${array}] needs to have atleast one element`
     array.forEach((value) => {
       if (!((typeof value === "number") || (typeof value === "string") || Array.isArray(value)))
         throw `Each ${array} element needs to be a number, string, or array`
@@ -106,17 +106,18 @@ export let mergeCommonElements = (...arrays) => {
 
 export let numberOfOccurrences = (...arrays) => {
   //this function takes in a variable number of arrays that's what the ...arrays signifies
-  if (!arrays)
+  if (arrays.length === 0 || !arrays)
     throw "Input needs to be arrays"
+
   arrays.forEach((array) => {
     if (!Array.isArray(array))
       throw `${array} is not an array`
+    if (array.length === 0)
+      throw `[${array}] needs to have at least one element`
     array.forEach((value) => {
-      if (array.length === 0)
-        throw `${array} needs to have at least one element`
       if (!((typeof value === "number") || (typeof value === "string")))
         throw `Each ${array} element needs to be a number or string`
-      if (typeof value == "string"){
+      if (typeof value === "string"){
         value.split('').forEach((char) => {
           if (char.toLowerCase() === char.toUpperCase())
             throw `${char} is not a letter`

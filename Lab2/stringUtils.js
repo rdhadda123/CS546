@@ -22,9 +22,9 @@ export let camelCase = (str) => {
 };
 
 export let replaceCharsAtIndexes = (str, idxArr) => {
-      if (!str || typeof str !== "string")
+      if (typeof str !== "string")
             throw "String does not exist"
-      if (str.length === 0)
+      if (!str || str.length === 0)
             throw "String needs to have length greater than 0"
       if (!str.trim())
             throw "String can't be empty"
