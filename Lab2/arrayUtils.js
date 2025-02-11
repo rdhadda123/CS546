@@ -82,7 +82,26 @@ export let mergeCommonElements = (...arrays) => {
       }
     })
   })
+  
+  let flattenedArr = arrays.map(arr => arr.flat(Infinity))
+  let resArr = [];
+  flattenedArr[0].forEach((element) => {
+    if (flattenedArr.every(arr => arr.includes(element)) && !resArr.includes(element)) {
+      resArr.push(element);
+    }
+  });
 
+  let numbers = []
+  let strings = []
+
+  for(let i = 0; i < resArr.length; i++){
+    if (typeof resArr[i] == "number") 
+      numbers.push(resArr[i])
+    else if (typeof resArr[i] == "string") 
+      strings.push(resArr[i])
+  }
+
+  return numbers.sort((a, b) => a - b).concat(strings.sort());
 };
 
 export let numberOfOccurrences = (...arrays) => {
