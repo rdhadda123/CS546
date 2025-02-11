@@ -28,26 +28,24 @@ export let commonKeysValues = (obj1, obj2) => {
                   if (val1 === val2) 
                         result[key] = val1;
                   else if (typeof val1 === 'object' && typeof val2 === 'object') {
-                        let nestedEqual = true;
+                        let nested = true;
                         const nestedKeys1 = Object.keys(val1);
                         const nestedKeys2 = Object.keys(val2);
 
                         nestedKeys1.forEach((nestedKey) => {
                         if (nestedKeys2.includes(nestedKey)) {
                               if (val1[nestedKey] !== val2[nestedKey]) 
-                                    nestedEqual = false;
+                                    nested = false;
                               else 
                                     result[nestedKey] = val1[nestedKey];
-                              
                         } else 
-                              nestedEqual = false;
+                              nested = false;
                         })
-
-                        if (nestedEqual) 
+                        if (nested) 
                               result[key] = val1;
-                        }
                   }
-            })
+            }
+      })
 
       return result;
 };
