@@ -37,4 +37,14 @@ console.log(compressString("aaAA"))
 // console.log(compressString(""))
 // console.log(compressString("         "))
 
+const first = {name: {first: "Patrick", last: "Hill"}, age: 46};
+const second = {school: "Stevens", name: {first: "Patrick", last: "Hill"}};
+const third = {a: 2, b: {c: true, d: false}};
+const forth = {b: {c: true, d: false}, foo: "bar"};
+
+console.log(commonKeysValues(first, second)); // returns  {name: {first: "Patrick", last: "Hill"}, first: "Patrick", last: "Hill"} 
+console.log(commonKeysValues(third, forth)); // returns {b: {c: true, d: false}, c: true, d: false }
+console.log(commonKeysValues({}, {})); // {}
+console.log(commonKeysValues({a: 1}, {b: 2})); // {}
+
 console.log(calculateObject({ a: 3, b: 7, c: 5 }, n => n * 2))
