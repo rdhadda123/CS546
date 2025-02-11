@@ -21,8 +21,8 @@ export let camelCase = (str) => {
       return strArray.join('')
 };
 
-let replaceCharsAtIndexes = (str, idxArr) => {
-      
+export let replaceCharsAtIndexes = (str, idxArr) => {
+
 };
 
 export let compressString = (str) => {
@@ -30,4 +30,22 @@ export let compressString = (str) => {
             throw "String does not exist"
       if (!str.trim())
             throw "String can't be empty"
+
+      let resultStr = ""
+      let count = 1
+
+      for (let i = 0; i < str.length; i++){
+            if (str[i] === str[i + 1])
+                  count += 1
+            else {
+                  if (count > 1){
+                        resultStr += str[i] + count
+                  } else {
+                        resultStr += str[i] + ""
+                  }
+                  count = 1
+            }
+      }
+
+      return resultStr
 };
