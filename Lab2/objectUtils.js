@@ -52,7 +52,8 @@ export let commonKeysValues = (obj1, obj2) => {
     
                     if (nestedKeys1.every(nestedKey => nestedKeys2.includes(nestedKey) && val1[nestedKey] === val2[nestedKey])) {
                         result[key] = val1;
-                        nestedKeys1.forEach(nestedKey => result[nestedKey] = val1[nestedKey]);
+                        nestedKeys1.forEach(nestedKey => 
+                              result[nestedKey] = val1[nestedKey]);
                     }
                 }
             }
