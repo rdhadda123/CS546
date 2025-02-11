@@ -6,14 +6,33 @@
 export let deepEquality = (obj1, obj2) => {
       if ((!obj1) || (!obj2))
             throw "Object does not exist"
-      if ((typeof obj1 !== "object") || (typeof obj2 !== "object"))
+      if ((typeof obj1 !== "object") || (typeof obj2 !== "object") || (Array.isArray(obj1)) || (Array.isArray(obj2)))
             throw "Input needs to be of object type"
+
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+      
+      if ((keys1.length !== keys2.length) || !(keys1.every(key => keys2.includes(key))))
+            return false
+
+      for (let key of keys1) {
+            const val1 = obj1[key]
+            const val2 = obj2[key];
+    
+            if (typeof val1 === "object" && typeof val2 === "object") {
+                if (!deepEquality(val1, val2)) return false;
+            } else if (val1 !== val2) {
+                return false;
+            }
+      }
+        
+      return true;
 };
 
 export let commonKeysValues = (obj1, obj2) => {
       if ((!obj1) || (!obj2))
             throw "Object does not exist"
-      if ((typeof obj1 !== "object") || (typeof obj2 !== "object"))
+      if ((typeof obj1 !== "object") || (typeof obj2 !== "object") || (Array.isArray(obj1)) || (Array.isArray(obj2)))
             throw "Input needs to be of object type"
 
       let result = {};
@@ -54,7 +73,7 @@ export let calculateObject = (object, func) => {
       let resultObj = {}
       if (!object)
             throw "Object does not exist"
-      if (typeof object !== "object")
+      if (typeof object !== "object" || Array.isArray(object))
             throw `${object} needs to be an object`
       if (typeof func !== "function")
             throw `${func} needs to be a function`

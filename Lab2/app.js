@@ -37,6 +37,16 @@ console.log(compressString("aaAA"))
 // console.log(compressString(""))
 // console.log(compressString("         "))
 
+const first1 = {a: 2, b: 3};
+const second1 = {a: 2, b: 4};
+const third1 = {a: 2, b: 3};
+const forth1 = {a: {sA: "Hello", sB: "There", sC: "Class"}, b: 7, c: true, d: "Test"}
+const fifth1  = {c: true, b: 7, d: "Test", a: {sB: "There", sC: "Class", sA: "Hello"}}
+console.log(deepEquality(first1, second1)); // false
+console.log(deepEquality(forth1, fifth1)); // true
+console.log(deepEquality(forth1, third1)); // false
+console.log(deepEquality({}, {})); // true
+
 const first = {name: {first: "Patrick", last: "Hill"}, age: 46};
 const second = {school: "Stevens", name: {first: "Patrick", last: "Hill"}};
 const third = {a: 2, b: {c: true, d: false}};
@@ -46,5 +56,6 @@ console.log(commonKeysValues(first, second)); // returns  {name: {first: "Patric
 console.log(commonKeysValues(third, forth)); // returns {b: {c: true, d: false}, c: true, d: false }
 console.log(commonKeysValues({}, {})); // {}
 console.log(commonKeysValues({a: 1}, {b: 2})); // {}
+// console.log(commonKeysValues([1,2,3], [1,2,3])); // throws error 
 
 console.log(calculateObject({ a: 3, b: 7, c: 5 }, n => n * 2))
