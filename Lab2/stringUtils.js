@@ -37,26 +37,35 @@ export let replaceCharsAtIndexes = (str, idxArr) => {
                   throw `${element} is an invalid index`
       })
 
-      // let result = str.split('');
-      // let replacements = {};
+      let result = str.split('');
+      let idxLength = idxArr.length
 
-      // idxArr.forEach(idx => {
-      //       const char = str[idx];
-      //       const before = str[idx - 1] || '';
-      //       const after = str[idx + 1] || '';
-      //       replacements[char] = (before + after).split('');
-      // });
-
-      // for (let i = 0; i < result.length; i++) {
-      //       if (idxArr.includes(i)) continue;
-      //       if (replacements[result[i]]) {
-      //             let replacementArr = replacements[result[i]];
-      //             result[i] = replacementArr.shift();
-      //             replacements[result[i]] = replacementArr.length ? replacementArr : replacements[result[i]];
-      //       }
-      // }
-
-      // return result.join('');
+      while (idxLength > 0){
+            let before = ""
+            let after = ""
+            let current = ""
+            for (let i = 0; i < result.length; i++){
+                  if (idxArr.includes(i)){
+                        current = result[i]
+                        before = result[i - 1]
+                        after = result[i + 1]
+                        let alternating = true
+                        idxLength--
+                        for (let j = i + 1; j < result.length; j++){
+                              if (result[j] === current){
+                                    if (alternating) {
+                                          result[j] = before
+                                    } else {
+                                          result[j] = after
+                                    }
+                                    alternating = !alternating
+                              }
+                        }
+                  }       
+            }     
+      }
+      
+      return result.join('')
 };
 
 export let compressString = (str) => {

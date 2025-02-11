@@ -26,9 +26,9 @@ console.log(camelCase('FOO BAR'))
 console.log(camelCase("How now brown cow"))
 
 
-// console.log(replaceCharsAtIndexes("Daddy", [2]))
-// console.log(replaceCharsAtIndexes("abcabc", [1, 4]))
-// console.log(replaceCharsAtIndexes("mississippi", [1, 4, 7]))
+console.log(replaceCharsAtIndexes("Daddy", [2]))
+console.log(replaceCharsAtIndexes("abcabc", [1, 4]))
+console.log(replaceCharsAtIndexes("mississippi", [1, 4, 7]))
 
 console.log(compressString("aaabbccc"))
 console.log(compressString("hello"))
