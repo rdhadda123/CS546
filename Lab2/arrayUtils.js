@@ -84,10 +84,10 @@ export let mergeCommonElements = (...arrays) => {
   })
   
   let flattenedArr = arrays.map(arr => arr.flat(Infinity))
-  let resArr = [];
+  let resArr = []
   flattenedArr[0].forEach((element) => {
     if (flattenedArr.every(arr => arr.includes(element)) && !resArr.includes(element)) {
-      resArr.push(element);
+      resArr.push(element)
     }
   });
 
@@ -101,7 +101,7 @@ export let mergeCommonElements = (...arrays) => {
       strings.push(resArr[i])
   }
 
-  return numbers.sort((a, b) => a - b).concat(strings.sort());
+  return numbers.sort((a, b) => a - b).concat(strings.sort())
 };
 
 export let numberOfOccurrences = (...arrays) => {
