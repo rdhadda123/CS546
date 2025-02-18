@@ -9,7 +9,7 @@ Note:
 1. You will need an async function in your app.js file that awaits the calls to your function like the example below. You put all of your function calls within main each in its own try/catch block. and then you just call main().
 2. Do not create any other files beside the 'package.json' - meaning your zip should only have the files and folder in this stub and a 'package.json' file.
 3. Submit all files (including package.json) in a zip with your name in the following format: LastName_FirstName.zip.
-4. DO NOT submit a zip containing your node_modules folder.
+4. DO NOT submit a zip containing your node_modules folder. 
 
 import people from "./people.js");
 
@@ -25,3 +25,24 @@ async function main(){
 call main
 main();
 */
+
+import * as people from "./people.js"
+import * as companies from "./companies.js"
+
+async function main(){
+    try{
+        const peopledata = await people.getPersonById("fa36544d-bf92-4ed6-aa84-7085c6cb0440");
+        console.log(peopledata);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const peopledata2 = await people.getPersonById("       ");
+        console.log(peopledata2);
+    }catch(e){
+        console.log(e);
+    }
+}
+
+main()

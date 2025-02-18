@@ -1,6 +1,8 @@
 //Export the following functions using ES6 Syntax
-const listEmployees = async (companyName) => {};
+import axios from "axios";
 
-const sameIndustry = async (industry) => {};
+export const listEmployees = async (companyName) => {};
 
-const getCompanyById = async (id) => {};
+export const sameIndustry = async (industry) => {};
+
+export const getCompanyById = async (id) => {};
