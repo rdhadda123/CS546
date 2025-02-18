@@ -57,6 +57,20 @@ async function main(){
     }catch(e){
         console.log(e);
     }
+
+    try{
+        const postal = await people.getPostalCodes("Salt Lake City", "Utah");
+        console.log(postal);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const postal2 = await people.getPostalCodes(13, 25);
+        console.log(postal2);
+    }catch(e){
+        console.log(e);
+    }
 }
 
 main()

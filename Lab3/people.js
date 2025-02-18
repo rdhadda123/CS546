@@ -59,6 +59,35 @@ export const sameJobTitle = async (jobTitle) => {
     }
 };
 
-export const getPostalCodes = async (city, state) => {};
+export const getPostalCodes = async (city, state) => {
+    if (!city || !state)
+        throw "City or state does not exist"
+    if (typeof city !== "string" || typeof state !== "string")
+        throw "City or state needs to be a string"
+
+    city = city.trim()
+    state = state.trim()
+
+    if (city.length === 0 || state.length === 0)
+        throw "City or state can't be empty spaces"
+
+    try {
+        let result = []
+        let data = await getPeople()
+
+        for (const person of data){
+            if ((person.city.toUpperCase() === city.toUpperCase()) && (person.state.toUpperCase() === state.toUpperCase())){
+                result.push(person.postal_code)
+            }
+        }
+
+        if (result.length > 0)
+            return result.sort((a, b) => a - b)
+        else
+            throw "There are no postal_codes for the given city and state combination"
+    } catch (e) {
+        throw e
+    }
+};
 
 export const sameCityAndState = async (city, state) => {};
