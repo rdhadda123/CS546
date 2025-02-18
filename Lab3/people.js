@@ -7,7 +7,7 @@ async function getPeople() {
 }
 
 export const getPersonById = async (id) => {
-    if (!id || id.length === 0)
+    if (!id)
         throw "id does not exist"
     if (typeof id !== "string")
         throw "id needs to be a string"
@@ -29,7 +29,35 @@ export const getPersonById = async (id) => {
     }
 };
 
-export const sameJobTitle = async (jobTitle) => {};
+export const sameJobTitle = async (jobTitle) => {
+    if (!jobTitle)
+        throw "jobTitle does not exist"
+    if (typeof jobTitle !== "string")
+        throw "jobTitle needs to be a string"
+
+    jobTitle = jobTitle.trim()
+
+    if (jobTitle.length === 0)
+        throw "jobTitle can't be empty spaces"
+
+    try {
+        let result = []
+        let data = await getPeople()
+
+        for (const person of data){
+            if ((person.job_title.toUpperCase() === jobTitle.toUpperCase())){
+                result.push(person)
+            }
+        }
+
+        if (result.length < 2)
+            throw "There needs to be atleast two people with the same job title"
+        else
+            return result
+    } catch (e) {
+        throw e
+    }
+};
 
 export const getPostalCodes = async (city, state) => {};
 
