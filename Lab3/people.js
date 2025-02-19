@@ -1,7 +1,7 @@
 //Export the following functions using ES6 Syntax
 import axios from "axios";
 
-async function getPeople() {
+export async function getPeople() {
     const {data} = await axios.get('https://gist.githubusercontent.com/graffixnyc/448017f5cb43e0d590adb744e676f4b5/raw/495e09557914db5d2f40141aaef60113eb19bb41/people.json')
     return data
 }
@@ -116,7 +116,7 @@ export const sameCityAndState = async (city, state) => {
         if (result.length < 2)
             throw "There are not two people who live in the same city and state"
         
-        return result.sort((a, b) => a.split(" ")[1].localeCompare(b.split(" ")[1]));
+        return result.sort((a, b) => a.split(" ")[1].localeCompare(b.split(" ")[1]))
 
     } catch (e) {
         throw e

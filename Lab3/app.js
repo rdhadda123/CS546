@@ -45,7 +45,7 @@ async function main(){
     }
 
     try{
-        const jobData = await people.sameJobTitle("Help Desk Operator");
+        const jobData = await people.sameJobTitle("Help DESk Operator");
         console.log(jobData);
     }catch(e){
         console.log(e);
@@ -66,7 +66,7 @@ async function main(){
     }
 
     try{
-        const postal2 = await people.getPostalCodes(13, 25);
+        const postal2 = await people.getPostalCodes("Bayside", "New York");
         console.log(postal2);
     }catch(e){
         console.log(e);
@@ -82,6 +82,20 @@ async function main(){
     try{
         const sameCity2 = await people.sameCityAndState("Salt Lake City", "Utah");
         console.log(sameCity2);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const listEmployees = await companies.listEmployees("Will-Harvey");
+        console.log(listEmployees);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const listEmployees2 = await companies.listEmployees("Kemmer-Mohr");
+        console.log(listEmployees2);
     }catch(e){
         console.log(e);
     }
