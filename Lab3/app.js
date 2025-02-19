@@ -30,19 +30,19 @@ import * as people from "./people.js"
 import * as companies from "./companies.js"
 
 async function main(){
-    // try{
-    //     const peopledata = await people.getPersonById("fa36544d-bf92-4ed6-aa84-7085c6cb0440");
-    //     console.log(peopledata);
-    // }catch(e){
-    //     console.log(e);
-    // }
+    try{
+        const peopledata = await people.getPersonById("fa36544d-bf92-4ed6-aa84-7085c6cb0440");
+        console.log(peopledata);
+    }catch(e){
+        console.log(e);
+    }
 
-    // try{
-    //     const peopledata2 = await people.getPersonById();
-    //     console.log(peopledata2);
-    // }catch(e){
-    //     console.log(e);
-    // }
+    try{
+        const peopledata2 = await people.getPersonById();
+        console.log(peopledata2);
+    }catch(e){
+        console.log(e);
+    }
 
     try{
         const jobData = await people.sameJobTitle("Help Desk Operator");
@@ -96,6 +96,20 @@ async function main(){
     try{
         const sameIndustry1 = await companies.sameIndustry(43);
         console.log(sameIndustry1);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const companyId = await companies.getCompanyById("fb90892a-f7b9-4687-b497-d3b4606faddf");
+        console.log(companyId);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const companyId2 = await companies.getCompanyById("   ");
+        console.log(companyId2);
     }catch(e){
         console.log(e);
     }

@@ -23,9 +23,9 @@ export const sameIndustry = async (industry) => {
         let result = []
         let data = await getCompanies()
 
-        for (const person of data){
-            if ((person.industry.toUpperCase() === industry.toUpperCase())){
-                result.push(person)
+        for (const company of data){
+            if ((company.industry.toUpperCase() === industry.toUpperCase())){
+                result.push(company)
             }
         }
 
@@ -38,4 +38,25 @@ export const sameIndustry = async (industry) => {
     }
 };
 
-export const getCompanyById = async (id) => {};
+export const getCompanyById = async (id) => {
+    if (!id)
+        throw "id does not exist"
+    if (typeof id !== "string")
+        throw "id needs to be a string"
+    id = id.trim()
+
+    if (id.length === 0)
+        throw "id can't be empty spaces"
+
+    try {
+        let data = await getCompanies()
+        for (const company of data){
+            if (company.id === id)
+                return company
+        }
+        
+        throw "Company not found"
+    } catch (e) {
+        throw e
+    }
+};
