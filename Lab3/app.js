@@ -71,6 +71,20 @@ async function main(){
     }catch(e){
         console.log(e);
     }
+
+    try{
+        const sameCity = await people.sameCityAndState("Bayside", "New York");
+        console.log(sameCity);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const sameCity2 = await people.sameCityAndState("Salt Lake City", "Utah");
+        console.log(sameCity2);
+    }catch(e){
+        console.log(e);
+    }
 }
 
 main()

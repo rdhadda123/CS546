@@ -90,4 +90,35 @@ export const getPostalCodes = async (city, state) => {
     }
 };
 
-export const sameCityAndState = async (city, state) => {};
+export const sameCityAndState = async (city, state) => {
+    if (!city || !state)
+        throw "City or state does not exist"
+    if (typeof city !== "string" || typeof state !== "string")
+        throw "City or state needs to be a string"
+
+    city = city.trim()
+    state = state.trim()
+
+    if (city.length === 0 || state.length === 0)
+        throw "City or state can't be empty spaces"
+
+    try {
+        let result = []
+        let data = await getPeople()
+
+        for (const person of data){
+            let name = person.first_name + " " + person.last_name
+            if ((person.city.toUpperCase() === city.toUpperCase()) && (person.state.toUpperCase() === state.toUpperCase())){
+                result.push(name)
+            }
+        }
+
+        if (result.length < 2)
+            throw "There are not two people who live in the same city and state"
+        
+        return result.sort((a, b) => a.split(" ")[1].localeCompare(b.split(" ")[1]));
+
+    } catch (e) {
+        throw e
+    }
+};
