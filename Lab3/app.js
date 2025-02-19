@@ -85,6 +85,20 @@ async function main(){
     }catch(e){
         console.log(e);
     }
+
+    try{
+        const sameIndustry = await companies.sameIndustry('Auto Parts:O.E.M.');
+        console.log(sameIndustry);
+    }catch(e){
+        console.log(e);
+    }
+
+    try{
+        const sameIndustry1 = await companies.sameIndustry(43);
+        console.log(sameIndustry1);
+    }catch(e){
+        console.log(e);
+    }
 }
 
 main()
