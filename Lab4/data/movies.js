@@ -23,28 +23,34 @@ export const createMovie = async (
     throw "Parameter needs to be a string"
 
   //Trimming all string inputs
-  title, plot, rating, studio, director, dateReleased, runtime = title.trim(), plot.trim(), rating.trim(), studio.trim(), director.trim(), dateReleased.trim(), runtime.trim()
+  title= title.trim()
+  plot = plot.trim()
+  rating = rating.trim()
+  studio = studio.trim()
+  director = director.trim()
+  dateReleased = dateReleased.trim()
+  runtime = runtime.trim()
 
   //Validation for empty strings
-  if (title.length() === 0 || plot.length() === 0 || rating.length() === 0 || studio.length() === 0 || director.length() === 0 || dateReleased.length() === 0 || runtime.length() === 0)
+  if (title.length === 0 || plot.length === 0 || rating.length === 0 || studio.length === 0 || director.length === 0 || dateReleased.length === 0 || runtime.length === 0)
     throw "Parameters can't be empty strings"
 
   //Validation for title
-  if (title.length() < 2)
+  if (title.length < 2)
     throw `${title} needs to have length of 2 characters or more`
   else {
-    for (let i = 0; i < title.length(); i++){
-      if (!((title[i] >= 'a' && title[i] <= 'z') || (title[i] >= 'A' && title[i] <= 'Z') || (title[i] >= '0' && title[i] <= '9')))
+    for (let i = 0; i < title.length; i++){
+      if (!((title[i] >= 'a' && title[i] <= 'z') || (title[i] >= 'A' && title[i] <= 'Z') || (title[i] >= '0' && title[i] <= '9') || (title[i] === ' ')))
         throw `${title} can only contain letters and numbers`
     }
   }
 
   //Validation for studio
-  if (studio.length() < 5)
+  if (studio.length < 5)
     throw `${title} needs to have length of 5 characters or more`
   else {
-    for (let i = 0; i < studio.length(); i++){
-      if (!((studio[i] >= 'a' && studio[i] <= 'z') || (studio[i] >= 'A' && studio[i] <= 'Z')))
+    for (let i = 0; i < studio.length; i++){
+      if (!((studio[i] >= 'a' && studio[i] <= 'z') || (studio[i] >= 'A' && studio[i] <= 'Z') || (studio[i] === ' ')))
         throw `${studio} can only contain letters`
     }
   }
@@ -54,8 +60,8 @@ export const createMovie = async (
   if (directorArray.length !== 2)
     throw `${director} needs to have first and last name`
   else {
-    for (let i = 0; i < directorArray.length(); i++){
-      if (directorArray[i].length() < 3)
+    for (let i = 0; i < directorArray.length; i++){
+      if (directorArray[i].length < 3)
         throw `${directorArray[i]} needs to have length of 3 characters or more`
       if (!((directorArray[i] >= 'a' && directorArray[i] <= 'z') || (directorArray[i] >= 'A' && directorArray[i] <= 'Z')))
         throw `${directorArray[i]} can only contain letters`
@@ -69,18 +75,18 @@ export const createMovie = async (
   //Validation for genres
   if (!Array.isArray(genres))
     throw `${genres} is not an array`
-  if (genres.length() === 0)
+  if (genres.length === 0)
     throw `${genres} needs have atleast one element`
   else {
-    for (let i = 0; i < genres.length(); i++){
+    for (let i = 0; i < genres.length; i++){
       if (typeof genres[i] !== "string")
         throw `${genres[i]} needs to be a string`
       genres[i] = genres[i].trim()
-      if (genres[i].length() === 0)
+      if (genres[i].length === 0)
         throw `${genres[i]} can't be an empty string`
-      if (genres[i].length() < 5)
+      if (genres[i].length < 5)
         throw `${genres[i]} needs to have length of 5 characters or more`
-      if (!((genres[i] >= 'a' && genres[i] <= 'z') || (genres[i] >= 'A' && genres[i] <= 'Z')))
+      if (!((genres[i] >= 'a' && genres[i] <= 'z') || (genres[i] >= 'A' && genres[i] <= 'Z') || (genres[i] === ' ')))
         throw `${genres[i]} can only contain letters`
     }
   }
@@ -88,20 +94,20 @@ export const createMovie = async (
   //Validation for castMembers
   if (!Array.isArray(castMembers))
     throw `${castMembers} is not an array`
-  if (castMembers.length() === 0)
+  if (castMembers.length === 0)
     throw `${castMembers} needs have atleast one element`
   else {
-    for (let i = 0; i < castMembers.length(); i++){
+    for (let i = 0; i < castMembers.length; i++){
       if (typeof castMembers[i] !== "string")
         throw `${castMembers[i]} needs to be a string`
-      if (castMembers[i].trim().length() === 0)
+      if (castMembers[i].trim().length === 0)
         throw `${castMembers[i]} can't be an empty string`
       let castArray = castMembers[i].split(" ")
       if (castArray.length !== 2)
         throw `${castMembers[i]} needs to have first and last name`
       else {
-        for (let i = 0; i < castArray.length(); i++){
-          if (castArray[i].length() < 3)
+        for (let i = 0; i < castArray.length; i++){
+          if (castArray[i].length < 3)
             throw `${castArray[i]} needs to have length of 3 characters or more`
           if (!((castArray[i] >= 'a' && castArray[i] <= 'z') || (castArray[i] >= 'A' && castArray[i] <= 'Z')))
             throw `${castArray[i]} can only contain letters`
@@ -114,7 +120,7 @@ export const createMovie = async (
   const dateArray = dateReleased.split("/")
   const validMonths = {"01" : 31, "02": 28, "03" : 31, "04" : 30, "05" : 31, "06" : 30, "07" : 31, "08" : 31, "09" : 30, "10" : 31, "11" : 30, "12" : 31}
   const currentYear = new Date().getFullYear()
-  if (dateArray.length() !== 3)
+  if (dateArray.length !== 3)
     throw `${dateReleased} does not have proper format: mm/dd/yyyy format`
   if (!(dateArray[0] in validMonths))
     throw `${dateArray[0]} is not a valid month`
@@ -125,13 +131,13 @@ export const createMovie = async (
 
   //Validation for runtime
   const runtimeArray = runtime.split(" ")
-  let hour = Number(runtimeArray[0].substring(0, runtimeArray[0].length() - 1))
-  let minutes = Number(runtimeArray[1].substring(0, runtimeArray[1].length() - 3))
-  if (runtimeArray[0].substring(runtimeArray[0].length() - 1) !== 'h')
+  let hour = Number(runtimeArray[0].substring(0, runtimeArray[0].length - 1))
+  let minutes = Number(runtimeArray[1].substring(0, runtimeArray[1].length - 3))
+  if (runtimeArray[0].substring(runtimeArray[0].length - 1) !== 'h')
     throw `${runtime} is not in proper format: #h #min`
   if (!(Number.isInteger(hour) && hour >= 0))
     throw `${hour} is not a valid hour`
-  if (runtimeArray[1].substring(runtimeArray[1].length() - 3) !== 'min')
+  if (runtimeArray[1].substring(runtimeArray[1].length - 3) !== 'min')
     throw `${runtime} is not in proper format: #h #min`
   if (!(Number.isInteger(minutes) && (minutes >= 0 && minutes <= 59)))
     throw `${minutes} is not valid minutes`
@@ -141,32 +147,55 @@ export const createMovie = async (
   }
 
   let newMovie = {
-    title: string,
-    plot: string,
-    genres: [strings],
-    rating: string,
-    studio: string,
-    director: string,
-    castMembers: [strings],
-    dateReleased: string,
-    runtime: string
+    title: title,
+    plot: plot,
+    genres: genres,
+    rating: rating,
+    studio: studio,
+    director: director,
+    castMembers: castMembers,
+    dateReleased: dateReleased,
+    runtime: runtime
   }
 
-  const movieCollection = await movies()
-  const insertInfo = await movieCollection.insertOne(newMovie)
-  if (!insertInfo.acknowledged || !insertInfo.insertedId)
-    throw 'Could not add movie'
+  try {
+    const movieCollection = await movies()
+    const insertInfo = await movieCollection.insertOne(newMovie)
+    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+      throw 'Could not add movie'
 
-  const newID = insertInfo.insertedId.toString()
-  const movie = await this.getMovieById(newID)
+    const newID = insertInfo.insertedId.toString()
+    const movie = await getMovieById(newID)
 
-  return movie
+    return movie
+  } catch (e) {
+    throw e
+  }
 };
 
 export const getAllMovies = async () => {};
 
-export const getMovieById = async (id) => {};
+export const getMovieById = async (id) => {
+  if (!id) throw 'You must provide an id to search for'
+  if (typeof id !== 'string') throw 'Id must be a string'
+  id = id.trim()
+  if (id.trim().length === 0)
+    throw 'Id cannot be an empty string or just spaces'
+  if (!ObjectId.isValid(id)) throw 'invalid object ID'
+  
+  try {
+    const movieCollection = await movies()
+    const movie = await movieCollection.findOne({_id: new ObjectId(id)})
+    if (movie === null) throw 'No dog with that id'
+    movie._id = movie._id.toString();
+    return movie;
+  } catch (e) {
+    throw e
+  }
+  
+};
 
 export const removeMovie = async (id) => {};
 
 export const renameMovie = async (id, newName) => {};
+  

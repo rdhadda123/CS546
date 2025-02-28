@@ -17,15 +17,21 @@
 15. Try getting a movie by ID that does not exist to make sure it throws errors.
 
 */
-import movieData from './data/movies.js'
+import * as movieData from './data/movies.js'
 import { dbConnection, closeConnection } from './config/mongoConnection.js'
 
-// const db = await dbConnection();
-// await db.dropDatabase();
+const db = await dbConnection();
+await db.dropDatabase();
 
 async function main() {
-    const hackers = await movieData.createMovie("Hackers", "Hackers are blamed for making a virus that will capsize five oil tankers.", ["Crime", "Drama", "Romance"], "PG-13", "United Artists", "Iain Softley", ["Jonny Miller", "Angelina Jolie", "Matthew Lillard", "Fisher Stevens"], "09/15/1995", "1h 45min");
-    console.log(hackers);
+    try {
+        const hackers = await movieData.createMovie("Hackers", "Hackers are blamed for making a virus that will capsize five oil tankers.", ["Crime", "Drama", "Romance"], "PG-13", "United Artists", "Iain Softley", ["Jonny Miller", "Angelina Jolie", "Matthew Lillard", "Fisher Stevens"], "09/15/1995", "1h 45min");
+        console.log(hackers);
+    } catch (e) {
+        console.log(e)
+    }
+    
+    await closeConnection();
 }
 
 main();
