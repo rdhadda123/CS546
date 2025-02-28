@@ -22,3 +22,11 @@ import { dbConnection, closeConnection } from './config/mongoConnection.js'
 
 // const db = await dbConnection();
 // await db.dropDatabase();
+
+async function main() {
+    const hackers = await movieData.createMovie("Hackers", "Hackers are blamed for making a virus that will capsize five oil tankers.", ["Crime", "Drama", "Romance"], "PG-13", "United Artists", "Iain Softley", ["Jonny Miller", "Angelina Jolie", "Matthew Lillard", "Fisher Stevens"], "09/15/1995", "1h 45min");
+    console.log(hackers);
+}
+
+main();
+
