@@ -46,6 +46,21 @@ async function main() {
         console.log(e)
     }
 
+    // const allMovies = await movieData.getAllMovies()
+    
+    // try {
+    //     console.log(allMovies)
+    // } catch (e) {
+    //     console.log(e)
+    // }
+
+    // try {
+    //     const removeFortyTwo = await movieData.removeMovie("67c72eb4d76020940f796ebc")
+    //     console.log(removeFortyTwo)
+    // } catch (e) {
+    //     console.log(e)
+    // }
+
     await closeConnection();
 }
 

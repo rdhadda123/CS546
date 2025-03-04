@@ -158,19 +158,15 @@ export const createMovie = async (
     runtime: runtime
   }
 
-  try {
-    const movieCollection = await movies()
-    const insertInfo = await movieCollection.insertOne(newMovie)
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
-      throw 'Could not add movie'
+  const movieCollection = await movies()
+  const insertInfo = await movieCollection.insertOne(newMovie)
+  if (!insertInfo.acknowledged || !insertInfo.insertedId)
+    throw 'Could not add movie'
 
-    const newID = insertInfo.insertedId.toString()
-    const movie = await getMovieById(newID)
+  const newID = insertInfo.insertedId.toString()
+  const movie = await getMovieById(newID)
 
-    return movie
-  } catch (e) {
-    throw e
-  }
+  return movie
 };
 
 export const getAllMovies = async () => {
@@ -193,20 +189,30 @@ export const getMovieById = async (id) => {
     throw 'Id cannot be an empty string or just spaces'
   if (!ObjectId.isValid(id)) throw 'invalid object ID'
   
-  try {
-    const movieCollection = await movies()
-    const movie = await movieCollection.findOne({_id: new ObjectId(id)})
-    if (movie === null) throw 'No movie with that id'
-    movie._id = movie._id.toString()
-    return movie
-  } catch (e) {
-    throw e
-  }
+  const movieCollection = await movies()
+  const movie = await movieCollection.findOne({_id: new ObjectId(id)})
+  if (movie === null) throw 'No movie with that id'
+  movie._id = movie._id.toString()
+  return movie
   
 };
 
 export const removeMovie = async (id) => {
+  if (!id) throw 'You must provide an id to search for';
+  if (typeof id !== 'string') throw 'Id must be a string';
+  id = id.trim()
+  if (id.length === 0)
+    throw 'Id cannot be an empty string or just spaces';
+  if (!ObjectId.isValid(id)) throw 'invalid object ID';
+  const movieCollection = await movies();
+  const deletionInfo = await movieCollection.findOneAndDelete({
+    _id: new ObjectId(id)
+  });
 
+  if (!deletionInfo) {
+    throw `Could not delete movie with id of ${id}`;
+  }
+  return `${deletionInfo.title} has been successfully deleted!`;
 };
 
 export const renameMovie = async (id, newName) => {};
