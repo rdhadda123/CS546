@@ -24,57 +24,105 @@ const db = await dbConnection();
 await db.dropDatabase();
 
 async function main() {
+    let hackers = undefined
+    let fortyTwo = undefined
+    let breakfastClub = undefined
+    let wrongOne  = undefined
+    let notMovie = undefined
+    let wrongNewName = undefined
+
     try {
-        const hackers = await movieData.createMovie("Hackers", "Hackers are blamed for making a virus that will capsize five oil tankers.", ["Crime", "Drama", "Romance"], "PG-13", "United Artists", "Iain Softley", ["Jonny Miller", "Angelina Jolie", "Matthew Lillard", "Fisher Stevens"], "09/15/1995", "1h 45min");
+        hackers = await movieData.createMovie("Hackers", "Hackers are blamed for making a virus that will capsize five oil tankers.", ["Crime", "Drama", "Romance"], "PG-13", "United Artists", "Iain Softley", ["Jonny Miller", "Angelina Jolie", "Matthew Lillard", "Fisher Stevens"], "09/15/1995", "1h 45min");
         console.log(hackers);
     } catch (e) {
         console.log(e)
     }
-    
-    // try {
-    //     const hackerByID = await movieData.getMovieById("67c727ff300bd2b6c9af002c");
-    //     console.log(hackerByID)
-    // } catch (e) {
-    //     console.log(e)
-    // }
 
     try {
-        const fortyTwo = await movieData.createMovie("42", "In 1947, Jackie Robinson becomes the first African-American to play in Major League Baseball in the modern era when he was signed by the Brooklyn Dodgers and faces considerable racism in the process.", ["Biography", "Drama", "Sport"], "PG-13", "Warner Brothers", "Brian Helgeland", ["Chadwick Boseman", "Harrison Ford", "Nicole Beharie", "Christopher Meloni"], "04/09/2013", "2h 8min")
+        fortyTwo = await movieData.createMovie("42", "In 1947, Jackie Robinson becomes the first African-American to play in Major League Baseball in the modern era when he was signed by the Brooklyn Dodgers and faces considerable racism in the process.", ["Biography", "Drama", "Sport"], "PG-13", "Warner Brothers", "Brian Helgeland", ["Chadwick Boseman", "Harrison Ford", "Nicole Beharie", "Christopher Meloni"], "04/09/2013", "2h 8min")
         const allMovies = await movieData.getAllMovies()
         console.log(allMovies)
     } catch (e) {
         console.log(e)
     }
 
-    // const allMovies = await movieData.getAllMovies()
+    try {
+        breakfastClub = await movieData.createMovie("The Breakfast Club", "Five high school students meet in Saturday detention and discover how they have a lot more in common than they thought.", ["Comedy", "Drama"], "R", "Universal Pictures", "John Hughes", ["Judd Nelson", "Molly Ringwald", "Ally Sheedy", "Anthony Hall", "Emilio Estevez"], "02/07/1985", "1h 37min");
+        console.log(breakfastClub);
+    } catch (e) {
+        console.log(e)
+    }
+
+   
+
+    try {
+        hackers = await movieData.renameMovie(hackers._id, "Hackerz"); 
+        console.log(hackers);
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        fortyTwo = await movieData.removeMovie(fortyTwo._id)
+        console.log(fortyTwo)
+    } catch (e) {
+        console.log(e)
+    }
+    try {
+        const allMovies2 = await movieData.getAllMovies()
+        console.log(allMovies2)
+    } catch (e) {
+        console.log(e)
+    }
     
-    // try {
-    //     console.log(allMovies)
-    // } catch (e) {
-    //     console.log(e)
-    // }
+    try {
+        wrongOne = await movieData.createMovie("CS546", "Movie about course", ["Horror"], "R+", "Stevens", "Professor Hill", ["Rishabh Dhadda"], "02/15/2002", "1h 20min")
+        console.log(wrongOne)
+    } catch (e) {
+        console.log(e)
+    }
 
-    // try {
-    //     const removeFortyTwo = await movieData.removeMovie("67c72eb4d76020940f796ebc")
-    //     console.log(removeFortyTwo)
-    // } catch (e) {
-    //     console.log(e)
-    // }
+    try {
+        notMovie = await movieData.removeMovie("67c74cfc621c5de1010dea2b")
+        console.log(notMovie)
+    } catch (e) {
+        console.log(e)
+    }
 
-    // try {
-    //     const renamedFortyTwo = await movieData.renameMovie("67c73cf3a86a46acb7e9841d", "Forty Two"); 
-    //     console.log(renamedFortyTwo);
-    // } catch (e) {
-    //     console.log(e)
-    // }
+    try {
+        notMovie = await movieData.renameMovie("67c74cfc621c5de1010dea2b", "FortyTwo"); 
+        console.log(notMovie);
+    } catch (e) {
+        console.log(e)
+    }
 
-    // try {
-    //     const allMovies2 = await movieData.getAllMovies()
-    //     console.log(allMovies2)
-    // } catch (e) {
-    //     console.log(e)
-    // }
-    
+    try {
+        wrongNewName = await movieData.renameMovie(breakfastClub._id, "TBC!"); 
+        console.log(wrongNewName);
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        wrongNewName = await movieData.renameMovie(breakfastClub._id, "T"); 
+        console.log(wrongNewName);
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        wrongNewName = await movieData.renameMovie(breakfastClub._id, "The Breakfast Club"); 
+        console.log(wrongNewName);
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        const movie = await movieData.getMovieById(fortyTwo._id)
+        console.log(movie)
+    } catch (e) {
+        console.log(e)
+    }
 
     await closeConnection();
 }

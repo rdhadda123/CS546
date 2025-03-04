@@ -40,18 +40,18 @@ export const createMovie = async (
     throw `${title} needs to have length of 2 characters or more`
   else {
     for (let i = 0; i < title.length; i++){
-      if (!((title[i] >= 'a' && title[i] <= 'z') || (title[i] >= 'A' && title[i] <= 'Z') || (title[i] >= '0' && title[i] <= '9') || (title[i] === ' ')))
+      if (!/^[a-zA-Z0-9\s]+$/.test(title[i]))
         throw `${title} can only contain letters and numbers`
     }
   }
 
   //Validation for studio
   if (studio.length < 5)
-    throw `${title} needs to have length of 5 characters or more`
+    throw `${studio} needs to have length of 5 characters or more`
   else {
     for (let i = 0; i < studio.length; i++){
-      if (!((studio[i] >= 'a' && studio[i] <= 'z') || (studio[i] >= 'A' && studio[i] <= 'Z') || (studio[i] === ' ')))
-        throw `${studio} can only contain letters`
+      if (!/^[a-zA-Z\s]+$/.test(studio[i]))
+        throw `${studio[i]} can only contain letters and spaces`;
     }
   }
 
@@ -63,8 +63,8 @@ export const createMovie = async (
     for (let i = 0; i < directorArray.length; i++){
       if (directorArray[i].length < 3)
         throw `${directorArray[i]} needs to have length of 3 characters or more`
-      if (!((directorArray[i] >= 'a' && directorArray[i] <= 'z') || (directorArray[i] >= 'A' && directorArray[i] <= 'Z')))
-        throw `${directorArray[i]} can only contain letters`
+      if (!/^[a-zA-Z\s]+$/.test(directorArray[i]))
+        throw `${directorArray[i]} can only contain letters and spaces`;
     }
   }
 
@@ -86,8 +86,8 @@ export const createMovie = async (
         throw `${genres[i]} can't be an empty string`
       if (genres[i].length < 5)
         throw `${genres[i]} needs to have length of 5 characters or more`
-      if (!((genres[i] >= 'a' && genres[i] <= 'z') || (genres[i] >= 'A' && genres[i] <= 'Z') || (genres[i] === ' ')))
-        throw `${genres[i]} can only contain letters`
+      if (!/^[a-zA-Z\s]+$/.test(genres[i]))
+        throw `${genres[i]} can only contain letters and spaces`;
     }
   }
 
@@ -109,7 +109,7 @@ export const createMovie = async (
         for (let i = 0; i < castArray.length; i++){
           if (castArray[i].length < 3)
             throw `${castArray[i]} needs to have length of 3 characters or more`
-          if (!((castArray[i] >= 'a' && castArray[i] <= 'z') || (castArray[i] >= 'A' && castArray[i] <= 'Z')))
+          if (!/^[a-zA-Z\s]+$/.test(castArray[i]))
             throw `${castArray[i]} can only contain letters`
         }
       }
@@ -231,7 +231,7 @@ export const renameMovie = async (id, newName) => {
     throw `${newName} needs to have length of 2 characters or more`
   else {
     for (let i = 0; i < newName.length; i++){
-      if (!((newName[i] >= 'a' && newName[i] <= 'z') || (newName[i] >= 'A' && newName[i] <= 'Z') || (newName[i] >= '0' && newName[i] <= '9') || (newName[i] === ' ')))
+      if (!/^[a-zA-Z0-9\s]+$/.test(newName[i]))
         throw `${newName} can only contain letters and numbers`
     }
   }
