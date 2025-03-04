@@ -173,29 +173,41 @@ export const createMovie = async (
   }
 };
 
-export const getAllMovies = async () => {};
+export const getAllMovies = async () => {
+  const movieCollection = await movies()
+  let movieList = await movieCollection.find({}).toArray()
+  if (!movieList) throw 'Could not get all movies'
+  movieList = movieList.map((element) => {
+    element._id = element._id.toString()
+    return element
+  })
+
+  return movieList
+};
 
 export const getMovieById = async (id) => {
   if (!id) throw 'You must provide an id to search for'
   if (typeof id !== 'string') throw 'Id must be a string'
   id = id.trim()
-  if (id.trim().length === 0)
+  if (id.length === 0)
     throw 'Id cannot be an empty string or just spaces'
   if (!ObjectId.isValid(id)) throw 'invalid object ID'
   
   try {
     const movieCollection = await movies()
     const movie = await movieCollection.findOne({_id: new ObjectId(id)})
-    if (movie === null) throw 'No dog with that id'
-    movie._id = movie._id.toString();
-    return movie;
+    if (movie === null) throw 'No movie with that id'
+    movie._id = movie._id.toString()
+    return movie
   } catch (e) {
     throw e
   }
   
 };
 
-export const removeMovie = async (id) => {};
+export const removeMovie = async (id) => {
+
+};
 
 export const renameMovie = async (id, newName) => {};
   

@@ -31,6 +31,21 @@ async function main() {
         console.log(e)
     }
     
+    // try {
+    //     const hackerByID = await movieData.getMovieById("67c727ff300bd2b6c9af002c");
+    //     console.log(hackerByID)
+    // } catch (e) {
+    //     console.log(e)
+    // }
+
+    try {
+        const fortyTwo = await movieData.createMovie("42", "In 1947, Jackie Robinson becomes the first African-American to play in Major League Baseball in the modern era when he was signed by the Brooklyn Dodgers and faces considerable racism in the process.", ["Biography", "Drama", "Sport"], "PG-13", "Warner Brothers", "Brian Helgeland", ["Chadwick Boseman", "Harrison Ford", "Nicole Beharie", "Christopher Meloni"], "04/09/2013", "2h 8min")
+        const allMovies = await movieData.getAllMovies()
+        console.log(allMovies)
+    } catch (e) {
+        console.log(e)
+    }
+
     await closeConnection();
 }
 
