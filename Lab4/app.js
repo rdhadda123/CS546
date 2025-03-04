@@ -61,6 +61,21 @@ async function main() {
     //     console.log(e)
     // }
 
+    // try {
+    //     const renamedFortyTwo = await movieData.renameMovie("67c73cf3a86a46acb7e9841d", "Forty Two"); 
+    //     console.log(renamedFortyTwo);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+
+    // try {
+    //     const allMovies2 = await movieData.getAllMovies()
+    //     console.log(allMovies2)
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    
+
     await closeConnection();
 }
 

@@ -215,5 +215,45 @@ export const removeMovie = async (id) => {
   return `${deletionInfo.title} has been successfully deleted!`;
 };
 
-export const renameMovie = async (id, newName) => {};
+export const renameMovie = async (id, newName) => {
+  if (!id) throw 'You must provide an id to search for';
+  if (typeof id !== 'string') throw 'Id must be a string';
+  id = id.trim()
+  if (id.length === 0)
+    throw 'Id cannot be an empty string or just spaces';
+  if (!ObjectId.isValid(id)) throw 'invalid object ID';
+  if (!newName) throw 'You must provide a new name for your movie';
+  if (typeof newName !== 'string') throw `${newName} must be a string`;
+  newName = newName.trim()
+  if (newName.length === 0)
+    throw `${newName} cannot be an empty string or string with just spaces`;
+  if (newName.length < 2)
+    throw `${newName} needs to have length of 2 characters or more`
+  else {
+    for (let i = 0; i < newName.length; i++){
+      if (!((newName[i] >= 'a' && newName[i] <= 'z') || (newName[i] >= 'A' && newName[i] <= 'Z') || (newName[i] >= '0' && newName[i] <= '9') || (newName[i] === ' ')))
+        throw `${newName} can only contain letters and numbers`
+    }
+  }
+  const movieCollection = await movies()
+  const movie = await movieCollection.findOne({_id: new ObjectId(id)})
+  if (movie === null) throw 'No movie with that id'
+  if (movie.title === newName) throw `${newName} is the same as ${movie.title}`
+
+  const updatedMovie = {
+    title: newName
+  }
+
+  const updatedInfo = await movieCollection.findOneAndUpdate(
+    {_id: new ObjectId(id)},
+    {$set: updatedMovie},
+    {returnDocument: 'after'}
+  );
+
+  if (!updatedInfo) {
+    throw 'could not update movie successfully';
+  }
+  updatedInfo._id = updatedInfo._id.toString();
+  return updatedInfo;
+};
   
