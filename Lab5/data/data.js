@@ -4,15 +4,26 @@ to get the stocks, people, getStockById, getPersonById.  You will import these f
 import {getPeopleData, getStocksData, checkId} from '../helpers.js'
 
 export const getStocks = async () => {
-    const stocksCollection = await getStocksData()
-    return stocksCollection.find({}).toArray()
+    try {
+        const stocksCollection = await getStocksData()
+        return stocksCollection.data
+    } catch (e) {
+        throw "Failed to fetch to stocks data"
+    }
 };
 
 export const getPeople = async () => {
-    const peopleCollection = await getPeopleData()
-    return peopleCollection.find({}).toArray()
+    try {
+        const peopleCollection = await getPeopleData()
+        return peopleCollection.data
+    } catch (e) {
+        throw "Failed to fetch to people data"
+    }
 };
 
-export const getStockById = async (id) => {};
+export const getStockById = async (id) => {
+    id = checkId(id)
+
+};
 
 export const getPersonById = async (id) => {};
