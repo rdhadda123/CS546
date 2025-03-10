@@ -11,6 +11,7 @@
   "author": "Rishabh Dhadda 10460208",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.8.2"
+    "axios": "^1.8.2",
+    "express": "^4.21.2"
   }
 }

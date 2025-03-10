@@ -10,3 +10,6 @@ Lab Requirements:
 -DO NOT ADD ANY OTHER FILE OR FOLDER APART FROM PACKAGE.JSON (OR package-lock.json) FILE.
 Do not forget the start command and the "type": "module" property in package.json
 */
+
+import express from 'express'
+const app = express()
