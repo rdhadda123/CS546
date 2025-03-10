@@ -10,3 +10,12 @@ export async function getStocksData() {
     const {data} = await axios.get('https://gist.githubusercontent.com/graffixnyc/8c363d85e61863ac044097c0d199dbcc/raw/7d79752a9342ac97e4953bce23db0388a39642bf/stocks.json')
     return data
 }
+
+export const checkId = (id) => {
+    if (!id) throw 'Error: You must provide an id to search for';
+    if (typeof id !== 'string') throw 'Error: id must be a string';
+    id = id.trim();
+    if (id.length === 0)
+      throw 'Error: id cannot be an empty string or just spaces';
+    return id;
+}
