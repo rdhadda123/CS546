@@ -34,7 +34,19 @@ export const getStockById = async (id) => {
     } catch (e) {
         throw e
     }
-    
 };
 
-export const getPersonById = async (id) => {};
+export const getPersonById = async (id) => {
+    id = checkId(id)
+    try {
+        const peopleCollection = await getPeopleData()
+        for (const person of peopleCollection) {
+            if (person.id === id)
+                return person
+        }
+
+        throw `Person with id: ${id} not found`
+    } catch (e) {
+        throw e
+    }
+};
