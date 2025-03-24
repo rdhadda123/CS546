@@ -49,6 +49,7 @@ export const createMovie = async (
   //Validation for runtime
   runtime = checkRuntime(runtime)
 
+  //Ask if we add reviews and overallRating here
   let newMovie = {
       title: title,
       plot: plot,
