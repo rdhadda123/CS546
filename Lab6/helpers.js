@@ -35,6 +35,89 @@ export const checkArray = (array) => {
     return array
 }
 
+export const checkTitle = (title) => {
+    if (title.length < 2)
+        throw `${title} needs to have length of 2 characters or more`
+    else {
+        for (let i = 0; i < title.length; i++){
+            if (!/^[a-zA-Z0-9\s]+$/.test(title[i]))
+                throw `${title} can only contain letters and numbers`
+        }
+    }
+}
+export const checkStudio = (studio) => {
+    if (studio.length < 5)
+        throw `${studio} needs to have length of 5 characters or more`
+    else {
+        for (let i = 0; i < studio.length; i++){
+            if (!/^[a-zA-Z\s]+$/.test(studio[i]))
+                throw `${studio[i]} can only contain letters and spaces`;
+        }
+    }
+}
+export const checkDirector = (director) => {
+    const directorArray = director.split(" ")
+    if (directorArray.length !== 2)
+        throw `${director} needs to have first and last name`
+    else {
+        for (let i = 0; i < directorArray.length; i++){
+            if (directorArray[i].length < 3)
+                throw `${directorArray[i]} needs to have length of 3 characters or more`
+            if (!/^[a-zA-Z\s]+$/.test(directorArray[i]))
+                throw `${directorArray[i]} can only contain letters and spaces`;
+        }
+    }
+}
+
+export const checkRating = (rating) => {
+    if (!((rating === "G") || (rating === "PG") || (rating === "PG-13") || (rating === "R") || (rating === "NC-17")))
+        throw `${rating} needs to be one of these values: G, PG, PG-13, R, NC-17`
+}
+
+export const checkGenres = (genres) => {
+    genres = checkArray(genres)
+    if (genres.length === 0)
+        throw `${genres} needs have atleast one element`
+      else {
+        for (let i = 0; i < genres.length; i++){
+          if (typeof genres[i] !== "string")
+            throw `${genres[i]} needs to be a string`
+          genres[i] = genres[i].trim()
+          if (genres[i].length === 0)
+            throw `${genres[i]} can't be an empty string`
+          if (genres[i].length < 5)
+            throw `${genres[i]} needs to have length of 5 characters or more`
+          if (!/^[a-zA-Z\s]+$/.test(genres[i]))
+            throw `${genres[i]} can only contain letters and spaces`;
+        }
+    }
+}
+
+export const checkCastMembers = (castMembers) => {
+    castMembers = checkArray(castMembers)
+    if (castMembers.length === 0)
+        throw `${castMembers} needs have atleast one element`
+    else {
+        for (let i = 0; i < castMembers.length; i++){
+          if (typeof castMembers[i] !== "string")
+            throw `${castMembers[i]} needs to be a string`
+          if (castMembers[i].trim().length === 0)
+            throw `${castMembers[i]} can't be an empty string`
+          let castArray = castMembers[i].split(" ")
+          if (castArray.length !== 2)
+            throw `${castMembers[i]} needs to have first and last name`
+          else {
+            for (let i = 0; i < castArray.length; i++){
+              if (castArray[i].length < 3)
+                throw `${castArray[i]} needs to have length of 3 characters or more`
+              if (!/^[a-zA-Z\s]+$/.test(castArray[i]))
+                throw `${castArray[i]} can only contain letters`
+            }
+          }
+        }
+    }
+}
+
 export const checkDateReleased = (date) => {
     const dateArray = date.split("/")
     const validMonths = {"01" : 31, "02": 28, "03" : 31, "04" : 30, "05" : 31, "06" : 30, "07" : 31, "08" : 31, "09" : 30, "10" : 31, "11" : 30, "12" : 31}
