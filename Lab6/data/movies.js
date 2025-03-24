@@ -131,7 +131,17 @@ export const createMovie = async (
 
 };
 
-const getAllMovies = async () => {};
+const getAllMovies = async () => {
+  const movieCollection = await movies()
+  let movieList = await movieCollection.find({}).toArray()
+  if (!movieList) throw 'Could not get all movies'
+  movieList = movieList.map((element) => {
+    element._id = element._id.toString()
+    return element
+  })
+
+  return movieList
+};
 
 const getMovieById = async (movieId) => {};
 
