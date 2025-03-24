@@ -11,6 +11,7 @@
   "author": "Rishabh Dhadda 10460208",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.21.2",
     "mongodb": "^6.15.0"
   }
 }
