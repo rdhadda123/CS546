@@ -1,6 +1,8 @@
 //Export the following functions using ES6 Syntax
 
-import {checkDateReleased, checkID, checkRuntime, checkString} from "../helpers";
+import { ReturnDocument } from "mongodb";
+import { movies } from "../config/mongoCollections.js";
+import {checkArray, checkDateReleased, checkID, checkRuntime, checkString} from "../helpers";
 
 export const createMovie = async (
   title,
@@ -174,10 +176,98 @@ const updateMovie = async (
   genres,
   rating,
   studio,
+  director,
   castMembers,
   dateReleased,
   runtime
-) => {};
+) => {
+  if (!movieId || !title || !plot || !genres || !rating ||!studio || !director || !castMembers || !dateReleased || !runtime)
+    throw "All fields need to have valid values"
+  movieId = checkString(movieId)
+  title = checkString(title)
+  plot = checkString(plot)
+  rating = checkString(rating)
+  studio = checkString(studio)
+  director = checkString(director)
+  dateReleased = checkString(dateReleased)
+  runtime = checkString(runtime)
+
+  //Check if movieId is a valid ID
+  movieId = checkID(movieId)
+
+  //Validation check for genres
+  genres = checkArray(genres)
+  if (genres.length === 0)
+    throw `${genres} needs have atleast one element`
+  else {
+    for (let i = 0; i < genres.length; i++){
+      if (typeof genres[i] !== "string")
+        throw `${genres[i]} needs to be a string`
+      genres[i] = genres[i].trim()
+      if (genres[i].length === 0)
+        throw `${genres[i]} can't be an empty string`
+      if (genres[i].length < 5)
+        throw `${genres[i]} needs to have length of 5 characters or more`
+      if (!/^[a-zA-Z\s]+$/.test(genres[i]))
+        throw `${genres[i]} can only contain letters and spaces`;
+    }
+  }
+
+  //Validation for castMembers
+  castMembers = checkArray(castMembers)
+  if (castMembers.length === 0)
+    throw `${castMembers} needs have atleast one element`
+  else {
+    for (let i = 0; i < castMembers.length; i++){
+      if (typeof castMembers[i] !== "string")
+        throw `${castMembers[i]} needs to be a string`
+      if (castMembers[i].trim().length === 0)
+        throw `${castMembers[i]} can't be an empty string`
+      let castArray = castMembers[i].split(" ")
+      if (castArray.length !== 2)
+        throw `${castMembers[i]} needs to have first and last name`
+      else {
+        for (let i = 0; i < castArray.length; i++){
+          if (castArray[i].length < 3)
+            throw `${castArray[i]} needs to have length of 3 characters or more`
+          if (!/^[a-zA-Z\s]+$/.test(castArray[i]))
+            throw `${castArray[i]} can only contain letters`
+        }
+      }
+    }
+  }
+
+  //Validation for dateReleased
+  dateReleased = checkDateReleased(dateReleased)
+
+  //Validation for runtime
+  runtime = checkRuntime(runtime)
+
+  let updatedMovie = {
+    _id: movieId,
+    title: title,
+    plot: plot,
+    genres: genres,
+    rating: rating,
+    studio: studio,
+    director: director,
+    castMembers: castMembers,
+    dateReleased: dateReleased,
+    runtime: runtime
+  }
+
+  const movieCollection = await movies()
+  const updatedInfo = await movieCollection.findOneAndUpdate(
+    {_id: movieId},
+    {$set: updateMovie},
+    {returnDocument: 'after'}
+  )
+
+  if (!updatedInfo)
+    throw 'Could not update movie successfully'
+  updatedInfo._id = updatedInfo._id.toString()
+  return updatedInfo
+};
 
 const renameMovie = async (id, newName) => {
   //Not used for this lab
