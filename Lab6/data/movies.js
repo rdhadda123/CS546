@@ -1,6 +1,6 @@
 //Export the following functions using ES6 Syntax
 
-import {checkDateReleased, checkRuntime, checkString} from "../helpers";
+import {checkDateReleased, checkID, checkRuntime, checkString} from "../helpers";
 
 export const createMovie = async (
   title,
@@ -131,7 +131,7 @@ export const createMovie = async (
 
 };
 
-const getAllMovies = async () => {
+export const getAllMovies = async () => {
   const movieCollection = await movies()
   let movieList = await movieCollection.find({}).toArray()
   if (!movieList) throw 'Could not get all movies'
@@ -143,7 +143,15 @@ const getAllMovies = async () => {
   return movieList
 };
 
-const getMovieById = async (movieId) => {};
+export const getMovieById = async (movieId) => {
+  movieId = checkID(movieId)
+  
+  const movieCollection = await movies()
+  const movie = await movieCollection.findOne({_id: new ObjectId(id)})
+  if (movie === null) throw 'No movie with that id'
+  movie._id = movie._id.toString()
+  return movie
+};
 
 const removeMovie = async (movieId) => {};
 
