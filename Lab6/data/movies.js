@@ -59,7 +59,9 @@ export const createMovie = async (
       director: director,
       castMembers: castMembers,
       dateReleased: dateReleased,
-      runtime: runtime
+      runtime: runtime,
+      reviews:[],
+      overallRating: 0
     }
   
   const movieCollection = await movies()
@@ -162,7 +164,7 @@ export const updateMovie = async (
 
   const movieCollection = await movies()
   const updatedInfo = await movieCollection.findOneAndUpdate(
-    {_id: new ObjectId(id)},
+    {_id: new ObjectId(movieId)},
     {$set: updatedMovie},
     {returnDocument: 'after'}
   )

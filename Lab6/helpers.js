@@ -44,6 +44,8 @@ export const checkTitle = (title) => {
                 throw `${title} can only contain letters and numbers`
         }
     }
+
+    return title
 }
 export const checkStudio = (studio) => {
     if (studio.length < 5)
@@ -54,6 +56,8 @@ export const checkStudio = (studio) => {
                 throw `${studio[i]} can only contain letters and spaces`;
         }
     }
+
+    return studio
 }
 export const checkDirector = (director) => {
     const directorArray = director.split(" ")
@@ -67,11 +71,15 @@ export const checkDirector = (director) => {
                 throw `${directorArray[i]} can only contain letters and spaces`;
         }
     }
+
+    return director
 }
 
 export const checkRating = (rating) => {
     if (!((rating === "G") || (rating === "PG") || (rating === "PG-13") || (rating === "R") || (rating === "NC-17")))
         throw `${rating} needs to be one of these values: G, PG, PG-13, R, NC-17`
+
+    return rating
 }
 
 export const checkGenres = (genres) => {
@@ -91,6 +99,8 @@ export const checkGenres = (genres) => {
             throw `${genres[i]} can only contain letters and spaces`;
         }
     }
+
+    return genres
 }
 
 export const checkCastMembers = (castMembers) => {
@@ -116,6 +126,8 @@ export const checkCastMembers = (castMembers) => {
           }
         }
     }
+
+    return castMembers
 }
 
 export const checkDateReleased = (date) => {
@@ -152,4 +164,16 @@ export const checkRuntime = (runtime) => {
     }
 
     return runtime
+}
+
+export const checkReviewRating = (rating) => {
+    rating = checkNumber(rating)
+    if (rating < 1 || rating > 5)
+        throw `${rating} needs to be between 1 and 5.`
+    else {
+        if (!Number.isInteger(rating) || !(/^\d\.\d$/.test(rating.toString()) && rating >= 1.5 && rating <= 4.8))
+            throw `${rating} needs to be an integer or float between 1.5 and 4.8 with only one decimal place`
+    }
+
+    return rating
 }

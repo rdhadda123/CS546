@@ -2,7 +2,7 @@
 
 import { ObjectId } from "mongodb";
 import { movies } from "../config/mongoCollections";
-import { checkID, checkNumber, checkString } from "../helpers";
+import { checkID, checkNumber, checkReviewRating, checkString } from "../helpers";
 
 export const createReview = async (
   movieId,
@@ -22,28 +22,55 @@ export const createReview = async (
   const movie = await movieCollection.findOne({_id: new ObjectId(movieId)})
   if (!movie) throw 'No movie with that id'
 
-  rating = checkNumber(rating)
-  if (rating < 1 || rating > 5)
-    throw `${rating} needs to be between 1 and 5.`
-  else {
-    if (!Number.isInteger(rating) || !(/^\d\.\d$/.test(rating.toString()) && rating >= 1.5 && rating <= 4.8))
-      throw `Rating needs to be an integer or float between 1.5 and 4.8 with only one decimal place`
-  }
+  rating = checkReviewRating(rating)
 
-  //Ask if we add reviewDate here
+  //Get current date in desired format
+  const today = new Date()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2,'0')
+  const year = today.getFullYear()
+  
   let newReview = {
+    _id: new ObjectId(),
     reviewTitle: reviewTitle,
+    reviewDate: `${month}/${day}/${year}`,
     reviewerName: reviewerName,
     review: review,
     rating: rating,
   }
+
+  //Compute overallRating
+  let numReviews = movie.reviews.length
+  let totalRating = movie.overallRating * numReviews
+  let newRating = (rating + totalRating) / (numReviews + 1)
+
+  //Pushing new review to reviews array in movie
+  let movieReview = movie.reviews.push(newReview)
+
+  //update movie with new review and overall rating
+  let updatedMovie = {
+    reviews: movieReview,
+    overallRating: newRating
+  }
+
+  const updatedInfo = await movieCollection.findOneAndUpdate(
+    {_id: new ObjectId(movieId)},
+    {$set: updatedMovie},
+    {returnDocument: 'after'}
+  )
+
+  if (!updatedInfo)
+    throw 'Could not update review successfully'
+  updatedInfo._id = updatedInfo._id.toString()
+  return updatedInfo
 };
 
 export const getAllReviews = async (movieId) => {
+
 };
 
 export const getReview = async (reviewId) => {};
 
 export const removeReview = async (reviewId) => {};
 
-module.exports = {};
+// module.exports = {};
