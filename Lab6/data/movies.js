@@ -171,7 +171,7 @@ export const updateMovie = async (
 
   if (!updatedInfo)
     throw 'Could not update movie successfully'
-  updatedInfo._id = updatedInfo._id.toString()
+  
   return updatedInfo
 };
 

@@ -61,15 +61,30 @@ export const createReview = async (
 
   if (!updatedInfo)
     throw 'Could not update review successfully'
-  updatedInfo._id = updatedInfo._id.toString()
+
   return updatedInfo
 };
 
 export const getAllReviews = async (movieId) => {
+  movieId = checkID(movieId)
+  const movieCollection = await movies()
+  const movie = await movieCollection.findOne({_id: new ObjectId(movieId)})
+  if (!movie) throw 'No movie with that id'
 
+  return movie.reviews
 };
 
-export const getReview = async (reviewId) => {};
+export const getReview = async (reviewId) => {
+  reviewId = checkID(reviewId)
+  const movieCollection = await movies()
+  const movie = await movieCollection.find({"reviews._id": new ObjectId(reviewId)})
+  if (!movie) throw "No review what that id"
+
+  const review = movie.reviews.find(review => review._id.toString() === reviewId)
+  if (!review) throw "Review not found"
+
+  return review
+};
 
 export const removeReview = async (reviewId) => {};
 
