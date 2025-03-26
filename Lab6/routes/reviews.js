@@ -2,8 +2,9 @@
 import express from 'express'
 import { reviewData } from '../data/index.js';
 import { movieData } from '../data/index.js';
-import { checkID, checkReviewRating, checkString } from "../helpers";
+import { checkID, checkReviewRating, checkString } from "../helpers.js";
 
+const router = express.Router()
 router
   .route('/:movieId')
   .get(async (req, res) => {
@@ -104,3 +105,5 @@ router
       return res.status(404).send(e)
     }
   });
+
+  export default router;

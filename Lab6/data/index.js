@@ -2,5 +2,5 @@
 import movieDataFunctions from './movies.js'
 import reviewDataFunctions from './reviews.js'
 
-export const movieData = movieDataFunctions
-export const reviewData = reviewDataFunctions
+export const movieData = movieDataFunctions;
+export const reviewData = reviewDataFunctions;

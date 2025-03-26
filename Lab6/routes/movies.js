@@ -1,7 +1,7 @@
 //require express and express router as shown in lecture code
 import express from 'express'
 import { movieData } from '../data/index.js';
-import { checkCastMembers, checkDateReleased, checkDirector, checkGenres, checkID, checkRating, checkRuntime, checkString, checkStudio, checkTitle } from '../helpers';
+import { checkCastMembers, checkDateReleased, checkDirector, checkGenres, checkID, checkRating, checkRuntime, checkString, checkStudio, checkTitle } from '../helpers.js';
 
 const router = express.Router()
 router
@@ -143,3 +143,5 @@ router
       return res.status(404).send({error: e});
     }
   });
+
+  export default router;
