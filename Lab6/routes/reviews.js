@@ -2,7 +2,7 @@
 import express from 'express'
 import { reviewData } from '../data/index.js';
 import { movieData } from '../data/index.js';
-import { checkID } from "../helpers";
+import { checkID, checkReviewRating, checkString } from "../helpers";
 
 router
   .route('/:movieId')
@@ -29,6 +29,41 @@ router
   })
   .post(async (req, res) => {
     //code here for POST
+    let reviewInfo = req.body
+    if (!reviewInfo || reviewInfo.length === 0) {
+      return res
+        .status(400)
+        .json({error: 'There are no fields in the request body'})
+    }
+
+    try {
+      reviewInfo._id = checkID(req.params.movieId)
+      reviewInfo.reviewTitle = checkString(reviewInfo.reviewTitle)
+      reviewInfo.reviewerName = checkString(reviewInfo.reviewerName)
+      reviewInfo.review = checkString(reviewInfo.review)
+      reviewInfo.rating = checkReviewRating(reviewInfo.rating)
+    } catch (e) {
+      return res.status(400).json({error: e})
+    }
+
+    try {
+      await movieData.getMovieById(req.params.movieId)
+    } catch (e) {
+      return res.status(404).send(e)
+    }
+
+    try {
+      let newReview = await reviewData.createReview(
+        req.params.movieId,
+        reviewInfo.reviewTitle,
+        reviewInfo.reviewerName,
+        reviewInfo.review,
+        reviewInfo.rating
+      )
+      return res.json(newReview)
+    } catch (e) {
+      return res.status(500).json({error: e})
+    }
   });
 
 router

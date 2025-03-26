@@ -105,7 +105,7 @@ router
     }
 
     try {
-      movieInfo._id = checkID(movieInfo._id)
+      movieInfo._id = checkID(req.params.movieId)
       movieInfo.title = checkTitle(movieInfo.title)
       movieInfo.plot = checkString(movieInfo.plot)
       movieInfo.genres = checkGenres(movieInfo.genres)
