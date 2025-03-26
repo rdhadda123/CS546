@@ -3,6 +3,8 @@ import express from 'express'
 const app = express()
 import configRoutesFunction from './routes/index.js'
 
+app.use(express.json());
+
 configRoutesFunction(app)
 
 app.listen(3000, () => {

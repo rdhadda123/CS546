@@ -36,6 +36,7 @@ export const checkArray = (array) => {
 }
 
 export const checkTitle = (title) => {
+    title = checkString(title)
     if (title.length < 2)
         throw `${title} needs to have length of 2 characters or more`
     else {
@@ -48,6 +49,7 @@ export const checkTitle = (title) => {
     return title
 }
 export const checkStudio = (studio) => {
+    studio = checkString(studio)
     if (studio.length < 5)
         throw `${studio} needs to have length of 5 characters or more`
     else {
@@ -60,6 +62,7 @@ export const checkStudio = (studio) => {
     return studio
 }
 export const checkDirector = (director) => {
+    director = checkString(director)
     const directorArray = director.split(" ")
     if (directorArray.length !== 2)
         throw `${director} needs to have first and last name`
@@ -76,6 +79,7 @@ export const checkDirector = (director) => {
 }
 
 export const checkRating = (rating) => {
+    rating = checkString(rating)
     if (!((rating === "G") || (rating === "PG") || (rating === "PG-13") || (rating === "R") || (rating === "NC-17")))
         throw `${rating} needs to be one of these values: G, PG, PG-13, R, NC-17`
 
@@ -111,7 +115,8 @@ export const checkCastMembers = (castMembers) => {
         for (let i = 0; i < castMembers.length; i++){
           if (typeof castMembers[i] !== "string")
             throw `${castMembers[i]} needs to be a string`
-          if (castMembers[i].trim().length === 0)
+          castMembers[i] = castMembers[i].trim()
+          if (castMembers[i].length === 0)
             throw `${castMembers[i]} can't be an empty string`
           let castArray = castMembers[i].split(" ")
           if (castArray.length !== 2)
@@ -131,6 +136,7 @@ export const checkCastMembers = (castMembers) => {
 }
 
 export const checkDateReleased = (date) => {
+    date = checkString(date)
     const dateArray = date.split("/")
     const validMonths = {"01" : 31, "02": 28, "03" : 31, "04" : 30, "05" : 31, "06" : 30, "07" : 31, "08" : 31, "09" : 30, "10" : 31, "11" : 30, "12" : 31}
     const currentYear = new Date().getFullYear()
@@ -147,6 +153,7 @@ export const checkDateReleased = (date) => {
 }
 
 export const checkRuntime = (runtime) => {
+    runtime = checkString(runtime)
     const runtimeArray = runtime.split(" ")
     let hour = Number(runtimeArray[0].substring(0, runtimeArray[0].length - 1))
     let minutes = Number(runtimeArray[1].substring(0, runtimeArray[1].length - 3))
@@ -167,16 +174,19 @@ export const checkRuntime = (runtime) => {
 }
 
 export const checkReviewRating = (rating) => {
-    rating = checkNumber(rating)
-    if (rating < 1 || rating > 5)
-        throw `${rating} needs to be between 1 and 5.`
-    else {
-        if (!Number.isInteger(rating) || !(/^\d\.\d$/.test(rating.toString()) && rating >= 1.5 && rating <= 4.8))
-            throw `${rating} needs to be an integer or float between 1.5 and 4.8 with only one decimal place`
+    rating = checkNumber(rating);
+    
+    if (rating < 1 || rating > 5) {
+        throw `${rating} needs to be between 1 and 5.`;
     }
 
-    return rating
-}
+    // Check if it's an integer or a float with exactly one decimal place between 1.5 and 4.8
+    if (!Number.isInteger(rating) && !(rating >= 1.5 && rating <= 4.8 && /^-?\d+\.\d{1}$/.test(rating.toString()))) {
+        throw `${rating} needs to be an integer or a float between 1.5 and 4.8 with only one decimal place.`;
+    }
+
+    return rating;
+};
 
 export const calculateOverallRating = (reviews) => {
     reviews = checkArray(reviews)
@@ -189,4 +199,6 @@ export const calculateOverallRating = (reviews) => {
     });
 
     overallRating = (totalSum / reviews.length).toFixed(1)
+
+    return overallRating
 }

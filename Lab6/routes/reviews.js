@@ -10,7 +10,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      req.params.movieId = checkID(movieId)
+      req.params.movieId = checkID(req.params.movieId)
     } catch (e) {
       return res.status(400).json({error: e})
     }
@@ -72,7 +72,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      req.params.reviewId = checkID(reviewId)
+      req.params.reviewId = checkID(req.params.reviewId)
     } catch (e) {
       return res.status(400).json({error: e})
     }
@@ -87,7 +87,7 @@ router
   .delete(async (req, res) => {
     //code here for DELETE
     try {
-      req.params.reviewId = checkID(reviewId)
+      req.params.reviewId = checkID(req.params.reviewId)
     } catch (e) {
       return res.status(400).json({error: e})
     }

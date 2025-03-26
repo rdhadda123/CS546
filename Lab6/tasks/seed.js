@@ -40,11 +40,11 @@ const breakfastClub = await movie.createMovie(
 const inception = await movie.createMovie(
     "Inception",
     "A thief who enters the dreams of others to steal secrets is given the inverse task of planting an idea into the mind of a CEO.",
-    ["Action", "Adventure", "Sci-Fi"],
+    ["Action", "Adventure", "SciFi"],
     "PG-13",
-    "Warner Bros.",
+    "Warner Bros",
     "Christopher Nolan",
-    ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page", "Tom Hardy"],
+    ["Leonardo DiCaprio", "Joseph GordonLevitt", "Ellen Page", "Tom Hardy"],
     "07/16/2010",
     "2h 28min"
   )
@@ -52,11 +52,11 @@ const inception = await movie.createMovie(
   const theMatrix = await movie.createMovie(
     "The Matrix",
     "A computer hacker learns about the true nature of reality and his role in the war against its controllers.",
-    ["Action", "Sci-Fi"],
+    ["Action", "SciFi"],
     "R",
-    "Warner Bros.",
-    "Lana Wachowski, Lilly Wachowski",
-    ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss", "Hugo Weaving"],
+    "Warner Bros",
+    "Lana Wachowski",
+    ["Keanu Reeves", "Laurence Fishburne", "CarrieAnne Moss", "Hugo Weaving"],
     "03/31/1999",
     "2h 16min"
   )
@@ -68,7 +68,7 @@ const inception = await movie.createMovie(
     "R",
     "Miramax",
     "Quentin Tarantino",
-    ["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
+    ["John Travolta", "Samuel Jackson", "Uma Thurman", "Bruce Willis"],
     "10/14/1994",
     "2h 34min"
   )
@@ -88,6 +88,11 @@ const inception = await movie.createMovie(
     "The movie was flat out amazing",
     5
   )
+
+  console.log(hackers)
+  console.log(hackerReview)
+  console.log(hackerReview2)
+  console.log(hackers)
 
   console.log('Done seeding database')
   await closeConnection()

@@ -18,6 +18,7 @@ router
   .post(async (req, res) => {
     //code here for POST
     let movieInfo = req.body;
+    console.log(req.body)
     if (!movieInfo || Object.keys(movieInfo).length === 0) {
       return res
         .status(400)
@@ -25,7 +26,6 @@ router
     }
 
     try {
-      movieInfo._id = checkID(movieInfo._id)
       movieInfo.title = checkTitle(movieInfo.title)
       movieInfo.plot = checkString(movieInfo.plot)
       movieInfo.genres = checkGenres(movieInfo.genres)
@@ -40,17 +40,9 @@ router
     }
 
     try {
-      let newMovie = await movieData.createMovie(
-        movieInfo.title,
-        movieInfo.plot,
-        movieInfo.genres,
-        movieInfo.rating,
-        movieInfo.studio,
-        movieInfo.director,
-        movieInfo.castMembers,
-        movieInfo.dateReleased,
-        movieInfo.runtime
-      )
+      let {title, plot, genres, rating, studio, director, castMembers, dateReleased, runtime} = movieInfo
+      let newMovie = await movieData.createMovie(title, plot, genres, rating, studio, director, castMembers, dateReleased, runtime)
+      console.log(newMovie)
       return res.json(newMovie)
     } catch (e) {
       return res.status(500).json({error: e})
@@ -62,7 +54,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      req.params.movieId = checkID(movieId)
+      req.params.movieId = checkID(req.params.movieId)
     } catch (e) {
       return res.status(400).json({error: e}) 
     }
@@ -77,7 +69,7 @@ router
   .delete(async (req, res) => {
     //code here for DELETE
     try {
-      req.params.movieId = checkID(movieId)
+      req.params.movieId = checkID(req.params.movieId)
     } catch (e) {
       return res.status(400).json({error: e}) 
     }
@@ -105,7 +97,7 @@ router
     }
 
     try {
-      movieInfo._id = checkID(req.params.movieId)
+      req.params.movieId = checkID(req.params.movieId)
       movieInfo.title = checkTitle(movieInfo.title)
       movieInfo.plot = checkString(movieInfo.plot)
       movieInfo.genres = checkGenres(movieInfo.genres)
@@ -122,25 +114,17 @@ router
     try {
       await movieData.getMovieById(req.params.movieId)
     } catch (e) {
-      return res.status(404).json({error: e}) 
+      return res.status(404).json({error: "Error 1"}) 
     }
 
     try {
-      const updatedMovie = await movieData.updatedMovie(
-        req.params.movieId,
-        movieInfo.title,
-        movieInfo.plot,
-        movieInfo.genres,
-        movieInfo.rating,
-        movieInfo.studio,
-        movieInfo.director,
-        movieInfo.castMembers,
-        movieInfo.dateReleased,
-        movieInfo.runtime
+      let {title, plot, genres, rating, studio, director, castMembers, dateReleased, runtime} = movieInfo
+      const updatedMovie = await movieData.updateMovie(
+        req.params.movieId, title, plot, genres, rating, studio, director, castMembers, dateReleased, runtime
       )
       return res.json(updatedMovie)
     } catch (e) {
-      return res.status(404).send({error: e});
+      return res.status(404).send({error: "Error 2"});
     }
   });
 

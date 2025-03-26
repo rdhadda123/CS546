@@ -5,8 +5,8 @@ import movieRoutes from './movies.js'
 import reviewRoutes from './reviews.js'
 
 const constructorMethod = (app) => {
-    app.use('./movies', movieRoutes)
-    app.use('./reviews', reviewRoutes)
+    app.use('/movies', movieRoutes)
+    app.use('/reviews', reviewRoutes)
 
     app.use('*', (req, res) => {
         return res.status(404).json({error: 'Not found'});

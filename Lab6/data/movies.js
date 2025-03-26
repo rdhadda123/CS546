@@ -71,7 +71,7 @@ const exportedMethods = {
       throw 'Could not add movie'
   
     const newID = insertInfo.insertedId.toString()
-    const movie = await getMovieById(newID)
+    const movie = await this.getMovieById(newID)
   
     return movie
   
@@ -99,6 +99,7 @@ const exportedMethods = {
     return movie
   },
   
+  //Ask about output of deleted data. Should the output be shown here or in routes
   async removeMovie(movieId){
     movieId = checkID(movieId)
   
@@ -110,7 +111,7 @@ const exportedMethods = {
     if (!deletionInfo) {
       throw `Could not delete movie with id of ${movieId}`;
     }
-    return `${deletionInfo.title} has been successfully deleted!`;
+    return { movieId: movieId, deleted: true };
   },
   
   async updateMovie(
@@ -173,6 +174,7 @@ const exportedMethods = {
     if (!updatedInfo)
       throw 'Could not update movie successfully'
   
+    updatedInfo._id = updatedInfo._id.toString();
     return updatedInfo
   }
 };

@@ -2,7 +2,7 @@
 
 import { ObjectId } from "mongodb";
 import { movies } from "../config/mongoCollections.js";
-import { calculateOverallRating, checkID, checkReviewRating, checkString } from "../helpers.js";
+import { calculateOverallRating, checkArray, checkID, checkReviewRating, checkString } from "../helpers.js";
 
 const exportedMethods = {
   async createReview(
@@ -39,19 +39,17 @@ const exportedMethods = {
       review: review,
       rating: rating,
     }
-  
     //Compute overallRating
     let numReviews = movie.reviews.length
     let totalRating = movie.overallRating * numReviews
     let newRating = (rating + totalRating) / (numReviews + 1)
-  
-    //Pushing new review to reviews array in movie
-    let movieReview = movie.reviews.push(newReview)
+    
+    movie.reviews.push(newReview)
   
     //update movie with new review and overall rating
     let updatedMovie = {
-      reviews: movieReview,
-      overallRating: newRating
+      reviews: movie.reviews,
+      overallRating: newRating.toFixed(1)
     }
   
     const updatedInfo = await movieCollection.findOneAndUpdate(
@@ -63,7 +61,8 @@ const exportedMethods = {
     if (!updatedInfo)
       throw 'Could not update review successfully'
   
-    return updatedInfo
+    newReview._id = newReview._id.toString();
+    return newReview
   },
   
   async getAllReviews(movieId){
@@ -84,6 +83,7 @@ const exportedMethods = {
     const review = movie.reviews.find(review => review._id.toString() === reviewId)
     if (!review) throw "Review not found"
   
+    review._id = review._id.toString()
     return review
   },
   
