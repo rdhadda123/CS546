@@ -61,6 +61,18 @@ router
   .route('/:movieId')
   .get(async (req, res) => {
     //code here for GET
+    try {
+      req.params.movieId = checkID(movieId)
+    } catch (e) {
+      return res.status(400).json({error: e}) 
+    }
+
+    try {
+      const movie = await movieData.getMovieById(req.params.movieId)
+      return res.json(movie)
+    } catch (e) {
+      return res.status(404).json(e)
+    }
   })
   .delete(async (req, res) => {
     //code here for DELETE
