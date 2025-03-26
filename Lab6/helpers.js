@@ -177,3 +177,16 @@ export const checkReviewRating = (rating) => {
 
     return rating
 }
+
+export const calculateOverallRating = (reviews) => {
+    reviews = checkArray(reviews)
+    let totalSum = 0
+    let overallRating = 0
+    if (reviews.length === 0)
+        return 0
+    reviews.forEach(review => {
+        totalSum += review.rating
+    });
+
+    overallRating = (totalSum / reviews.length).toFixed(1)
+}

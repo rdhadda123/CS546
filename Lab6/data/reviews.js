@@ -2,7 +2,7 @@
 
 import { ObjectId } from "mongodb";
 import { movies } from "../config/mongoCollections";
-import { checkID, checkNumber, checkReviewRating, checkString } from "../helpers";
+import { calculateOverallRating, checkID, checkNumber, checkReviewRating, checkString } from "../helpers";
 
 export const createReview = async (
   movieId,
@@ -78,7 +78,7 @@ export const getReview = async (reviewId) => {
   reviewId = checkID(reviewId)
   const movieCollection = await movies()
   const movie = await movieCollection.find({"reviews._id": new ObjectId(reviewId)})
-  if (!movie) throw "No review what that id"
+  if (!movie) throw `No movie what that review id of ${reviewId}`
 
   const review = movie.reviews.find(review => review._id.toString() === reviewId)
   if (!review) throw "Review not found"
@@ -86,6 +86,26 @@ export const getReview = async (reviewId) => {
   return review
 };
 
-export const removeReview = async (reviewId) => {};
+export const removeReview = async (reviewId) => {
+  reviewId = checkID(reviewId)
+  const movieCollection = await movies()
+  const movie = await movieCollection.find({"reviews._id": new ObjectId(reviewId)})
+  if (!movie) throw "No movie what that review id"
+
+  const updatedReviews = movie.reviews.find(review => review._id.toString() !== reviewId)
+  const updatedInfo = await movieCollection.findOneAndUpdate(
+    {_id: new Object(movie._id)},
+    {$set: {
+      reviews: updatedReviews,
+      overallRating: calculateOverallRating(updatedReviews)
+    }},
+    {returnDocument: 'after'}
+  )
+
+  if (!updatedInfo)
+    throw `Could not remove review with reviewId of ${reviewId}`
+
+  return updatedInfo
+};
 
 // module.exports = {};

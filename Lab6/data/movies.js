@@ -92,7 +92,7 @@ export const getMovieById = async (movieId) => {
   movieId = checkID(movieId)
 
   const movieCollection = await movies()
-  const movie = await movieCollection.findOne({_id: new ObjectId(id)})
+  const movie = await movieCollection.findOne({_id: new ObjectId(movieId)})
   if (movie === null) throw 'No movie with that id'
   movie._id = movie._id.toString()
   return movie
@@ -103,11 +103,11 @@ export const removeMovie = async (movieId) => {
 
   const movieCollection = await movies();
   const deletionInfo = await movieCollection.findOneAndDelete({
-    _id: new ObjectId(id)
+    _id: new ObjectId(movieId)
   });
 
   if (!deletionInfo) {
-    throw `Could not delete movie with id of ${id}`;
+    throw `Could not delete movie with id of ${movieId}`;
   }
   return `${deletionInfo.title} has been successfully deleted!`;
 };
@@ -171,7 +171,7 @@ export const updateMovie = async (
 
   if (!updatedInfo)
     throw 'Could not update movie successfully'
-  
+
   return updatedInfo
 };
 
