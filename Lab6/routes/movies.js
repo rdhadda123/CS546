@@ -97,4 +97,49 @@ router
   })
   .put(async (req, res) => {
     //code here for PUT
+    let movieInfo = req.body
+    if (!movieInfo || Object.keys(movieInfo).length === 0) {
+      return res
+        .status(400)
+        .json({error: 'There are no fields in the request body'})
+    }
+
+    try {
+      movieInfo._id = checkID(movieInfo._id)
+      movieInfo.title = checkTitle(movieInfo.title)
+      movieInfo.plot = checkString(movieInfo.plot)
+      movieInfo.genres = checkGenres(movieInfo.genres)
+      movieInfo.rating = checkRating(movieInfo.rating)
+      movieInfo.studio = checkStudio(movieInfo.studio)
+      movieInfo.director = checkDirector(movieInfo.director)
+      movieInfo.castMembers = checkCastMembers(movieInfo.castMembers)
+      movieInfo.dateReleased = checkDateReleased(movieInfo.dateReleased)
+      movieInfo.runtime = checkRuntime(movieInfo.runtime)
+    } catch (e) {
+      return res.status(400).json({error: e})
+    }
+
+    try {
+      await movieData.getMovieById(req.params.movieId)
+    } catch (e) {
+      return res.status(404).json({error: e}) 
+    }
+
+    try {
+      const updatedMovie = await movieData.updatedMovie(
+        req.params.movieId,
+        movieInfo.title,
+        movieInfo.plot,
+        movieInfo.genres,
+        movieInfo.rating,
+        movieInfo.studio,
+        movieInfo.director,
+        movieInfo.castMembers,
+        movieInfo.dateReleased,
+        movieInfo.runtime
+      )
+      return res.json(updatedMovie)
+    } catch (e) {
+      return res.status(404).send({error: e});
+    }
   });
