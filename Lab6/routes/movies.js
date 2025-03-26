@@ -8,11 +8,11 @@ router
   .route('/')
   .get(async (req, res) => {
     try{
-      const movieList = await movieData.getAllMovies()
-      const formatMovies = movieList.map(({_id, title}) => ({_id, title}))
+      let movieList = await movieData.getAllMovies()
+      let formatMovies = movieList.map(({_id, title}) => ({_id, title}))
       res.json(formatMovies)
     } catch (e) {
-      return res.status(500).send(e)
+      return res.status(500).send({error: e})
     }
   })
   .post(async (req, res) => {
@@ -53,7 +53,7 @@ router
       )
       return res.json(newMovie)
     } catch (e) {
-      return res.sendStatus(500)
+      return res.status(500).json({error: e})
     }
   });
 
@@ -68,14 +68,32 @@ router
     }
 
     try {
-      const movie = await movieData.getMovieById(req.params.movieId)
+      let movie = await movieData.getMovieById(req.params.movieId)
       return res.json(movie)
     } catch (e) {
-      return res.status(404).json(e)
+      return res.status(404).send(e)
     }
   })
   .delete(async (req, res) => {
     //code here for DELETE
+    try {
+      req.params.movieId = checkID(movieId)
+    } catch (e) {
+      return res.status(400).json({error: e}) 
+    }
+
+    try {
+      await movieData.getMovieById(req.params.movieId)
+    } catch (e) {
+      return res.status(404).json({error: e}) 
+    }
+
+    try {
+      let deletedMovie = await movieData.removeMovie(req.params.movieId)
+      return res.json(deletedMovie)
+    } catch (e) {
+      return res.status(404).send({error: e})
+    }
   })
   .put(async (req, res) => {
     //code here for PUT
