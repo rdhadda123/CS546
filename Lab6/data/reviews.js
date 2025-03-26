@@ -71,14 +71,14 @@ export const getAllReviews = async (movieId) => {
   const movie = await movieCollection.findOne({_id: new ObjectId(movieId)})
   if (!movie) throw 'No movie with that id'
 
-  return movie.reviews
+  return movie.reviews || []
 };
 
 export const getReview = async (reviewId) => {
   reviewId = checkID(reviewId)
   const movieCollection = await movies()
-  const movie = await movieCollection.find({"reviews._id": new ObjectId(reviewId)})
-  if (!movie) throw `No movie what that review id of ${reviewId}`
+  const movie = await movieCollection.findOne({"reviews._id": new ObjectId(reviewId)})
+  if (!movie) throw `No movie with a review id of ${reviewId}`
 
   const review = movie.reviews.find(review => review._id.toString() === reviewId)
   if (!review) throw "Review not found"
@@ -89,12 +89,12 @@ export const getReview = async (reviewId) => {
 export const removeReview = async (reviewId) => {
   reviewId = checkID(reviewId)
   const movieCollection = await movies()
-  const movie = await movieCollection.find({"reviews._id": new ObjectId(reviewId)})
+  const movie = await movieCollection.findOne({"reviews._id": new ObjectId(reviewId)})
   if (!movie) throw "No movie what that review id"
 
-  const updatedReviews = movie.reviews.find(review => review._id.toString() !== reviewId)
+  const updatedReviews = movie.reviews.filter(review => review._id.toString() !== reviewId)
   const updatedInfo = await movieCollection.findOneAndUpdate(
-    {_id: new Object(movie._id)},
+    {_id: new ObjectId(movie._id)},
     {$set: {
       reviews: updatedReviews,
       overallRating: calculateOverallRating(updatedReviews)

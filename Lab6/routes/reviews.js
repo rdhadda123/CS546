@@ -70,7 +70,37 @@ router
   .route('/review/:reviewId')
   .get(async (req, res) => {
     //code here for GET
+    try {
+      req.params.reviewId = checkID(reviewId)
+    } catch (e) {
+      return res.status(400).json({error: e})
+    }
+
+    try {
+      let review = await reviewData.getReview(req.params.reviewId)
+      return res.json(review)
+    } catch (e) {
+      return res.status(404).send(e)
+    }
   })
   .delete(async (req, res) => {
     //code here for DELETE
+    try {
+      req.params.reviewId = checkID(reviewId)
+    } catch (e) {
+      return res.status(400).json({error: e})
+    }
+
+    try {
+      await reviewData.getReview(req.params.reviewId)
+    } catch (e) {
+      return res.status(404).send(e)
+    }
+
+    try {
+      let deletedReview = await reviewData.removeReview(req.params.reviewId)
+      return res.json(deletedReview)
+    } catch (e) {
+      return res.status(404).send(e)
+    }
   });
