@@ -1,9 +1,18 @@
 //require express and express router as shown in lecture code
+import express from 'express'
+import { movieData } from '../data/index.js';
 
+const router = express.Router()
 router
   .route('/')
   .get(async (req, res) => {
-    //code here for GET
+    try{
+      const movieList = await movieData.getAllMovies()
+      const formatMovies = movieList.map(({_id, title}) => ({_id, title}))
+      res.json(formatMovies)
+    } catch (e) {
+      return res.status(500).send(e)
+    }
   })
   .post(async (req, res) => {
     //code here for POST
