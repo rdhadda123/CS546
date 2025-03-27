@@ -200,5 +200,5 @@ export const calculateOverallRating = (reviews) => {
 
     overallRating = (totalSum / reviews.length).toFixed(1)
 
-    return overallRating
+    return Number(overallRating)
 }

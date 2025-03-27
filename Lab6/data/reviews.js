@@ -39,6 +39,8 @@ const exportedMethods = {
       review: review,
       rating: rating,
     }
+
+    // newReview._id = newReview._id.toString();
     //Compute overallRating
     let numReviews = movie.reviews.length
     let totalRating = movie.overallRating * numReviews
@@ -49,7 +51,7 @@ const exportedMethods = {
     //update movie with new review and overall rating
     let updatedMovie = {
       reviews: movie.reviews,
-      overallRating: newRating.toFixed(1)
+      overallRating: Number(newRating.toFixed(1))
     }
   
     const updatedInfo = await movieCollection.findOneAndUpdate(
@@ -61,8 +63,7 @@ const exportedMethods = {
     if (!updatedInfo)
       throw 'Could not update review successfully'
   
-    newReview._id = newReview._id.toString();
-    return newReview
+    return updatedInfo
   },
   
   async getAllReviews(movieId){
