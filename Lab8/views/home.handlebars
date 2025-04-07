@@ -9,3 +9,28 @@ You should have a main element, and inside of the main element have a p element 
 
 Also inside the main element, you will have a form; this form will POST to /searchmarveluniverse. This form will have an input and a label; You will give the input a name AND id attribute of "searchByCharactersName".  The label should properly reference the same id as the input. You should also have an input with a type of submit that submits the form (DO not use a button, you MUST use an input with type="submit"). 
  -->
+
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Marvel Universe Character Search</title>
+        <link rel="stylesheet" href="/public/main.css">
+    </head>
+
+    <body>
+        <main>
+            <h1>Marvel Universe Character Search</h1>
+            <p>
+                This site utilizes the Marvel API to provide the user with information about Marvel movies. This site is built using HTML, CSS, Express, and uses Handlebars to create pages and handle routing. This is an exciting project using APIs to get information about Marvel movies.
+            </p>
+            <form action="/searchmarveluniverse" method="POST">
+                <label id = "searchByCharactersName">Search for a movie by name:</label>   
+                <input name = "searchByCharactersName" type = "text" id = "searchByCharactersName" required> 
+                <input type="submit" value="Search">
+            </form>
+        </main>
+    </body>
+
+</html>
