@@ -1,1 +1,18 @@
 /*This file should have 10 CSS rulesets */
+.title {
+    font-weight: bolder;
+    font-size: x-large;
+    color: rgb(0, 4, 66);
+    text-align: center;
+}
+.home-format {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem;
+}
+.paragraph-style {
+    font-size: large;
+    margin-right: 10rem;
+    margin-left: 10rem;
+    margin-bottom: 3rem;
+}

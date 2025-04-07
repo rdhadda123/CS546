@@ -6,7 +6,7 @@ const router = express.Router()
 router.route('/').get(async (req, res) => {
   //code here for GET will render the home handlebars file
   try {
-    res.render('home')
+    return res.render('home', { title: 'Marvel Universe Character Search' })
   } catch (e) {
     return res.status(500).json({error: e})
   }
@@ -14,13 +14,17 @@ router.route('/').get(async (req, res) => {
 
 router.route('/searchmarveluniverse').post(async (req, res) => {
   //code here for POST this is where your form will be submitting searchCharacterByName and then call your data function passing in the searchCharacterByName and then rendering the search results of up to 15 characters.
-  const name = checkString(req.body.name)
+  const name = checkString(req.body.searchByCharactersName)
   
   try {
     const data = await searchCharactersByName(name)
     if (data.length === 0)
-      res.render('error', {error: 404, message: `No results were found for ${name}`})
-    res.render('characterSearchResults', {})
+      return res.status(404).json({error: e})
+    return res.render('characterSearchResults', {
+      title: 'Characters Found',
+      searchTerm: name,
+      characters: data
+    })
   } catch (e) {
     return res.status(500).json({error: e})
   }
