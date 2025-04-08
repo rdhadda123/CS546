@@ -18,7 +18,7 @@ export const searchCharactersByName = async (name) => {
     throw 'Invalid response from API'
   }
 
-  return data.data.results.slice(0,15)
+  return data.data.results.slice(0,20)
 
 };
 
