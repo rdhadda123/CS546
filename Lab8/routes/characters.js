@@ -21,7 +21,7 @@ router.route('/searchmarveluniverse').post(async (req, res) => {
     if (data.length === 0 || !data)
       return res.render('error', {
         error: 404,
-        message: `We're sorry, but no results were found for ${name}`
+        message: `We're sorry, but no results were found for ${name}.`
       })
     return res.render('characterSearchResults', {
       title: 'Characters Found',
@@ -41,7 +41,7 @@ router.route('/character/:id').get(async (req, res) => {
     if (data.length === 0 || !data)
       return res.render('error', {
         error: 404,
-        message: `We're sorry, but no results were found for id of ${id}`
+        message: `We're sorry, but no results were found for id of ${id}.`
       })
 
     const character = data[0]
@@ -49,7 +49,10 @@ router.route('/character/:id').get(async (req, res) => {
       title: character.name,
       characterName: character.name,
       imageUrl: character.thumbnail.path + '/portrait_uncanny.jpg',
-      description: character.description,
+      description:
+        character.description && character.description.trim() !== ''
+          ? character.description
+          : 'No description available.',
       comics: character.comics.items
     })
   } catch (e) {
