@@ -16,3 +16,17 @@ The title of the document should be the name of the character. You should have t
 
 
     }}
+    <main>
+        <article>
+            <h1 class="title">{{characterName}}</h1>
+            <img alt = "{{characterName}}" src = "{{imageUrl}}" />
+            <p>{{description}}</p>
+            <h2>Comics</h2>
+            <ul>
+                {{#each comics}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </article>
+        <a href="/">Search for Another Character</a>
+    </main>

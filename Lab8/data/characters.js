@@ -13,9 +13,7 @@ const auth = `ts=${ts}&apikey=${publickey}&hash=${hash}`;
 export const searchCharactersByName = async (name) => {
   //Function to search the api and return up to 15 characters matching the name param
   name = checkString(name)
-  console.log(name)
   const { data } = await axios.get(`${baseUrl}?nameStartsWith=${name}&${auth}`)
-  console.log(data)
   if (!data || !data.data || !Array.isArray(data.data.results)) {
     throw 'Invalid response from API'
   }
@@ -28,6 +26,8 @@ export const getCharacterById = async (id) => {
   //Function to fetch a character from the api matching the id
   id = checkID(id)
   const { data } = await axios.get(`${baseUrl}/${id}?${auth}`)
-  
-  return data.data
+  if (!data || !data.data || !Array.isArray(data.data.results)) {
+    throw 'Invalid response from API'
+  }
+  return data.data.results
 };
