@@ -13,15 +13,16 @@ The title of the document should be "Characters Found". You should have the titl
 
 
     }}
-<h1 class="title">Characters Found</h1>
+<h1 class="title">{{title}}</h1>
 <h2>Results for: {{searchTerm}}</h2>
-<main>
-  <ol>
+<p class="paragraph-style">These are the results for the term you searched for which is {{searchTerm}}. This will display the first 15 results from your designated character search. If you want to search another term, click on the "Search for Another Character" button on the bottom of the page.</p>
+<main>  
+  <ol class="list-styling">
     {{#each characters}}
       <li>
         <a href="/character/{{this.id}}">{{this.name}}</a>
       </li>
     {{/each}}
   </ol>
-  <a href="/">Search for Another Character</a>
+  <a class="search-cta" href="/">Search for Another Character</a>
 </main>

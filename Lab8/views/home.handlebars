@@ -11,14 +11,14 @@ Also inside the main element, you will have a form; this form will POST to /sear
  -->
 
 
-<h1 class= "title">Marvel Universe Character Search</h1>
+<h1 class= "title">{{title}}</h1>
 <main class="home-format">
     <p class="paragraph-style">
         This site utilizes the Marvel API to provide the user with information about Marvel characters. This site is built using HTML, CSS, Express, and uses Handlebars to create pages and handle routing. This is an exciting project using APIs to get information about Marvel characters.
     </p>
     <form action="/searchmarveluniverse" method="post">
-        <label for="searchByCharactersName">Search for a character by name:</label>   
+        <label class="search-request" for="searchByCharactersName">Search for a character by name:</label>   
         <input name="searchByCharactersName" id="searchByCharactersName" type="text" required> 
-        <input type="submit" value="Search">
+        <input type="submit" value="Search" class="button">
     </form>
 </main>
