@@ -6,10 +6,11 @@ you just need one route to send the static homepage.html file using the res.send
 */
 
 import express from 'express'
+import path from 'path'
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.sendFile('static/homepage.html')
+    res.sendFile(path.resolve('static/homepage.html'))
 })
 
 export default router

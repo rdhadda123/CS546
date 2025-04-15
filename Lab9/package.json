@@ -11,6 +11,7 @@
   "author": "Rishabh Dhadda 10460208",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "path": "^0.12.7"
   }
 }

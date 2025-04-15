@@ -31,3 +31,85 @@ You can use either the DOM API or jQuery (or a mix of both) for the assignment.Â
 
 
 */
+
+function parseInputToArrays(input) {
+    const parts = input.split(',').map(part => part.trim());
+
+    let arrays = [];
+    let current = '';
+    let insideArray = false;
+
+    for (let part of parts) {
+        if (part === '' && !insideArray) continue;
+
+        current += (current ? ',' : '') + part;
+
+        if (current.startsWith('[')) {
+            insideArray = true;
+        }
+
+        if (insideArray && current.endsWith(']')) {
+            try {
+                const parsed = JSON.parse(current);
+
+                if (!Array.isArray(parsed)) {
+                    throw `Not a valid array: ${current}`;
+                }
+
+                if (parsed.length === 0) {
+                    throw `Empty arrays are not allowed: ${current}`;
+                }
+
+                if (!parsed.every(num => typeof num === 'number')) {
+                    throw `All elements must be numbers: ${current}`;
+                }
+
+                arrays.push(current);
+            } catch (e) {
+                throw `Invalid array format: ${current}`;
+            }
+
+            current = '';
+            insideArray = false;
+        } else if (!insideArray && current !== '') {
+            throw `Unexpected value outside array: ${current}`;
+        }
+    }
+
+    if (insideArray || current !== '') {
+        throw 'Incomplete array detected';
+    }
+
+    return arrays;
+}
+
+function sortArrays(input){
+    const arrays = parseInputToArrays(input)
+    return arrays.map(array => {
+        const arr = JSON.parse(array);
+
+        if (!Array.isArray(arr) || !arr.every(num => typeof num === 'number')) {
+            throw `Invalid array content: ${array}`;
+        }
+
+        const sorted = arr.sort((a, b) => a - b);
+        return JSON.stringify(sorted);
+    });
+    
+}
+
+let myForm = document.getElementById('arraySortForm')
+let textInput = document.getElementById('array_input')
+let errorDiv = document.getElementById('error')
+let listDiv = document.getElementById('input_sorted')
+if (myForm) {
+    myForm.addEventListener('submit', (event) => { //submit or submitButton
+        event.preventDefault()
+        console.log("textInput", textInput)
+        console.log("value", textInput.value)
+        const input = textInput.value.trim()
+        if (input){
+            console.log(sortArrays(input))
+        }
+    })
+}

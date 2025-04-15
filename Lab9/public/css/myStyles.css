@@ -3,3 +3,11 @@ You will style your page using at least 10 CSS rule-sets for general CSS stylin
 
 You must style the is-odd class to make text have a color of #0000FF and is-even class to make text have a color of #FF0000. Both is-odd and is-even should also be bold (these can count as 2 of your 10 rule-sets) 
 */
+.is-odd {
+    color: #0000FF;
+    font-weight: bold;
+}
+.is-even {
+    color: #FF0000;
+    font-weight: bold;
+}
