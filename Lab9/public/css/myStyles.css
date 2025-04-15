@@ -11,3 +11,46 @@ You must style the is-odd class to make text have a color of #0000FF and is-eve
     color: #FF0000;
     font-weight: bold;
 }
+.inputClass {
+	border: 3px solid red;
+	background-color: #eee;
+}
+.list {
+    font-size: large;
+    border: 3px dotted black;
+}
+.error {
+    color: red;
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+}
+.title {
+    font-weight: bolder;
+    font-size: xx-large;
+    color: rgb(38, 0, 255);
+    text-align: center;
+}
+.home-format {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem;
+    font-size: large;
+}
+button {
+    background-color: red;
+    color: white;
+    border-color: black;
+    border-radius: 2rem;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.footer {
+    font-weight: bold;
+    font-size: medium;
+    text-align: center;
+    color: rgb(38, 0, 255);
+}
+body {
+    background-color: rgb(201, 255, 222);
+}

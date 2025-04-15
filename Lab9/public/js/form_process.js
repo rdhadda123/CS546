@@ -33,83 +33,103 @@ You can use either the DOM API or jQuery (or a mix of both) for the assignment.Â
 */
 
 function parseInputToArrays(input) {
-    const parts = input.split(',').map(part => part.trim());
+    const parts = input.split(',').map(part => part.trim())
 
-    let arrays = [];
-    let current = '';
-    let insideArray = false;
+    let arrays = []
+    let current = ''
+    let insideArray = false
 
     for (let part of parts) {
-        if (part === '' && !insideArray) continue;
-
-        current += (current ? ',' : '') + part;
-
-        if (current.startsWith('[')) {
-            insideArray = true;
-        }
+        if (part === '' && !insideArray) continue
+        current += (current ? ',' : '') + part
+        if (current.startsWith('[')) 
+            insideArray = true
 
         if (insideArray && current.endsWith(']')) {
             try {
-                const parsed = JSON.parse(current);
+                const parsed = JSON.parse(current)
 
-                if (!Array.isArray(parsed)) {
-                    throw `Not a valid array: ${current}`;
-                }
-
-                if (parsed.length === 0) {
-                    throw `Empty arrays are not allowed: ${current}`;
-                }
-
-                if (!parsed.every(num => typeof num === 'number')) {
-                    throw `All elements must be numbers: ${current}`;
-                }
-
-                arrays.push(current);
+                if (!Array.isArray(parsed))
+                    throw `Not a valid array: ${current}`
+                if (parsed.length === 0) 
+                    throw `Empty arrays are not allowed: ${current}`
+                if (!parsed.every(num => typeof num === 'number'))
+                    throw `All elements must be numbers: ${current}`
+                arrays.push(current)
             } catch (e) {
-                throw `Invalid array format: ${current}`;
+                throw `Invalid array format: ${current}`
             }
 
-            current = '';
-            insideArray = false;
-        } else if (!insideArray && current !== '') {
-            throw `Unexpected value outside array: ${current}`;
-        }
+            current = ''
+            insideArray = false
+        } else if (!insideArray && current !== '') 
+            throw `Unexpected value outside array: ${current}`
     }
-
-    if (insideArray || current !== '') {
-        throw 'Incomplete array detected';
-    }
-
-    return arrays;
+    if (insideArray || current !== '') 
+        throw 'Incomplete array detected'
+    return arrays
 }
 
 function sortArrays(input){
     const arrays = parseInputToArrays(input)
     return arrays.map(array => {
-        const arr = JSON.parse(array);
-
-        if (!Array.isArray(arr) || !arr.every(num => typeof num === 'number')) {
-            throw `Invalid array content: ${array}`;
+        const arr = JSON.parse(array)
+        if (!Array.isArray(arr) || !arr.every(num => Number.isInteger(num))) {
+            throw `Invalid array content: ${array}`
         }
-
-        const sorted = arr.sort((a, b) => a - b);
-        return JSON.stringify(sorted);
-    });
-    
+        const sorted = arr.sort((a, b) => a - b)
+        return JSON.stringify(sorted)
+    })
 }
 
 let myForm = document.getElementById('arraySortForm')
 let textInput = document.getElementById('array_input')
 let errorDiv = document.getElementById('error')
 let listDiv = document.getElementById('input_sorted')
+
+let count = 0
 if (myForm) {
-    myForm.addEventListener('submit', (event) => { //submit or submitButton
+    myForm.addEventListener('submit', (event) => {
         event.preventDefault()
         console.log("textInput", textInput)
         console.log("value", textInput.value)
         const input = textInput.value.trim()
-        if (input){
-            console.log(sortArrays(input))
+        if (!input){
+            errorDiv.hidden = false
+            errorDiv.innerHTML = 'Input cannot be empty or just spaces!'
+            textInput.className = 'inputClass'
+            textInput.focus()
+            return
+        }
+        try {
+            const sortedInput = sortArrays(input)
+            for (let sorted of sortedInput) {
+                const li = document.createElement('li')
+                li.textContent = sorted
+                li.className = count % 2 === 0 ? 'is-odd' : 'is-even'
+                listDiv.appendChild(li)
+                count++
+            }
+
+            const allArrays = sortedInput.map(str => JSON.parse(str))
+            const flattened = [...new Set(allArrays.flat())].sort((a, b) => a - b)
+            const lastElement = document.createElement('li')
+            lastElement.textContent = JSON.stringify(flattened)
+            lastElement.className = count % 2 === 0 ? 'is-odd' : 'is-even'
+            listDiv.appendChild(lastElement)
+            count++
+
+            errorDiv.hidden = true
+            errorDiv.innerHTML = ''
+            textInput.classList.remove('inputClass')
+            myForm.reset()
+            textInput.focus()
+
+        } catch (e) {
+            errorDiv.hidden = false
+            errorDiv.innerHTML = e
+            textInput.className = 'inputClass'
+            textInput.focus()
         }
     })
 }

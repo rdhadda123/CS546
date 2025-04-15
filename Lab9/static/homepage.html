@@ -34,24 +34,22 @@ An example that would be displayed in LI of the list (YOU MUST DISPLAY IT WITH T
      <head>
          <meta charset="UTF-8">
          <title>Rishabh's Array Sort Application</title>
-         <link rel="stylesheet" href="/public/main.css">
+         <link rel="stylesheet" href="/public/css/myStyles.css">
      </head>
      <body>
          <header>
-            <h1>Rishabh's Array Sort Application</h1>
+            <h1 class="title">Rishabh's Array Sort Application</h1>
          </header>
          <main>
-            <p id="error" hidden>
-
-            </p>
-            <form method="post" name="arraySortForm" id="arraySortForm">
-                <label for="array_input">Enter one or more arrays separated by commas ([5, 1, 3], [4, 2, 5]): </label>
+            <p id="error" class="error" hidden></p>
+            <form method="post" name="arraySortForm" id="arraySortForm" class="home-format">
+                <label for="array_input">Enter one or more arrays separated by commas (such as [5, 1, 3], [4, 2, 5]): </label>
                 <input name="array_input" id="array_input" type="text">
                 <button type="submit" name="submitButton" id="submitButton">Sort Arrays</button>
             </form>
-            <ol id="input_sorted"></ol>
+            <ol class="list" id="input_sorted" ></ol>
          </main>
-         <footer>Rishabh Dhadda, 10460208 </footer>
+         <footer class="footer">Rishabh Dhadda, 10460208 </footer>
 
          <script src="/public/js/form_process.js"></script>
      </body>
