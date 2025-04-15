@@ -28,3 +28,31 @@ An example that would be displayed in LI of the list (YOU MUST DISPLAY IT WITH T
 [4, 6, 9, 11, 15]
 
  -->
+
+ <!DOCTYPE html>
+ <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <title>Rishabh's Array Sort Application</title>
+         <link rel="stylesheet" href="/public/main.css">
+     </head>
+     <body>
+         <header>
+            <h1>Rishabh's Array Sort Application</h1>
+         </header>
+         <main>
+            <p id="error">
+
+            </p>
+            <form method="post" name="arraySortForm" id="arraySortForm">
+                <label for="array_input">Enter an array (separated by commas): </label>
+                <input name="array_input" id="array_input" type="text">
+                <button type="submit" name="submitButton" id="submitButton"></button>
+            </form>
+            <ol id="input_sorted"></ol>
+         </main>
+         <footer>Rishabh Dhadda, 10460208 </footer>
+
+         <script src="/public/js/form_process.js"></script>
+     </body>
+ </html>
