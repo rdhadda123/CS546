@@ -4,8 +4,7 @@ import arrayRoutes from './arraySort.js'
 const constructorMethod = (app) => {
     app.use('/', arrayRoutes);
     app.use('*', (req, res) => {
-        //Do I have to redirect to '/' page?
-        return res.status(404).json({error: 'Not found'});
+        res.redirect('/')
     });
   };
   
