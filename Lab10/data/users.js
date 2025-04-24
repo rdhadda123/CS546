@@ -1,4 +1,4 @@
-import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId, getSignupDate } from "../helpers.js";
+import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId, getLastLogin, getSignupDate } from "../helpers.js";
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcrypt"
 
@@ -51,4 +51,33 @@ export const register = async (
   return {registrationCompleted: true}
 };
 
-export const login = async (userId, password) => {};
+export const login = async (userId, password) => {
+  if (!userId || !password)
+    throw "All fields need to have valid values"
+  userId = checkUserId(userId)
+  password = checkPassword(password)
+
+  const userCollection = await users()
+  const user = await userCollection.findOne({userId: userId.toLowerCase()})
+
+  if (!user)
+    throw "Either the userId or password is invalid"
+
+  const matchedPassword = await bcrypt.compare(password, user.password)
+  if (matchedPassword){
+     const returnedObj = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      userId: user.userId,
+      favoriteQuote: user.favoriteQuote,
+      themePreference: user.themePreference,
+      role: user.role,
+      signupDate: user.signupDate,
+      lastLogin: getLastLogin()
+     }
+     return returnedObj
+  } else {
+    throw "Either the userId or password is invalid"
+  }
+
+};
