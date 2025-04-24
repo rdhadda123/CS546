@@ -3,3 +3,23 @@
 login form handlebar template
 
 --}}
+<h1>Sign In</h1>
+<main>
+    <form id="signin-form" method="POST" action="/login">
+        <div>
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <button type="submit" id="submit_button" name="submit_button">Sign In</button>
+        </div>
+    </form>
+    <p><a href="/register">Click here to signup!</a></p>
+</main>
+    

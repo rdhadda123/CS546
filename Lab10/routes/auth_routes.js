@@ -20,6 +20,7 @@ router
   .route('/login')
   .get(async (req, res) => {
     //code here for GET
+    res.render('')
   })
   .post(async (req, res) => {
     //code here for POST
