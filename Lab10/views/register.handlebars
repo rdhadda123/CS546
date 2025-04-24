@@ -3,3 +3,62 @@
 registration handelbars
 
 --}}
+
+<h1>Register</h1>
+<main>
+    <form name="signup-form" id="signup-form" method="POST" action="/register">
+        <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+
+        <div>
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+        <div>
+            <label for="favoriteQuote">Favorite Quote:</label>
+            <input type="text" id="favoriteQuote" name="favoriteQuote">
+        </div>
+
+        <div>
+            <label for="backgroundColor">Background Color:</label>
+            <input type="color" id="backgroundColor" name="backgroundColor">
+        </div>
+
+        <div>
+            <label for="fontColor">Font Color:</label>
+            <input type="color" id="fontColor" name="fontColor">
+        </div>
+
+        <div>
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+            <option value="superuser">Super User</option>
+            <option value="user">User</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" id="submitButton" name="submitButton">Sign Up</button>
+        </div>
+    </form>
+    <p><a href="/login">Already have an account? Click here to sign-in</a></p>
+    <p><a href="/">Return to Home</a></p>
+</main>
