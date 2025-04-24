@@ -11,6 +11,11 @@ router
   .route('/register')
   .get(async (req, res) => {
     //code here for GET
+    try {
+      return res.render('register')
+    } catch (e) {
+      return res.status(500).json({error: e})
+    }
   })
   .post(async (req, res) => {
     //code here for POST
