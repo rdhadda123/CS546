@@ -1,4 +1,7 @@
 //import express, express router as shown in lecture code
+import { Router } from "express";
+const router = Router()
+import bcrypt from "bcrypt"
 
 router.route('/').get(async (req, res) => {
   //code here for GET
