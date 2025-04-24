@@ -20,7 +20,11 @@ router
   .route('/login')
   .get(async (req, res) => {
     //code here for GET
-    res.render('')
+    try {
+      return res.render('login')
+    } catch (e) {
+      return res.status(500).json({error: e})
+    }
   })
   .post(async (req, res) => {
     //code here for POST
