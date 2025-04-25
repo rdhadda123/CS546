@@ -76,3 +76,25 @@ if (registerForm) {
         }
     })
 }
+if (signinForm) {
+    signinForm.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const userId = document.getElementById('userId').value
+        const password = document.getElementById('password').value
+        if (!userId){
+            alert("UserId is necessary to sign up.")
+            return
+        }
+        if (!password) {
+            alert("Password is necessary to sign up")
+            return
+        }
+
+        try {
+            userId = checkUserId(userId)
+            password = checkPassword(password)
+        } catch (e) {
+            alert(e)
+        }
+    })
+}
