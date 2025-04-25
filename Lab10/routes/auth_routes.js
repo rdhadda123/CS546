@@ -2,6 +2,8 @@
 import { Router } from "express";
 const router = Router()
 import bcrypt from "bcrypt"
+import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId } from "../helpers.js";
+import { register } from "../data/users.js";
 
 router.route('/').get(async (req, res) => {
   //code here for GET
@@ -19,6 +21,72 @@ router
   })
   .post(async (req, res) => {
     //code here for POST
+    try {
+      const firstName = req.body.firstName
+      const lastName = req.body.lastName
+      const userId = req.body.userId;
+      const password = req.body.password;
+      const confirmPassword = req.body.confirmPassword;
+      const quote = req.body.favoriteQuote;
+      const backgroundColor = req.body.backgroundColor;
+      const fontColor = req.body.fontColor;
+      const role = req.body.role;
+
+      const missing = []
+      if (!firstName)
+        missing.push("firstName")
+      if (!lastName)
+        missing.push("lastName")
+      if (!userId)
+        missing.push("userId")
+      if (!password)
+        missing.push("password")
+      if (!confirmPassword)
+        missing.push("confirmPassword")
+      if (!quote)
+        missing.push("quote")
+      if (!backgroundColor)
+        missing.push("backgroundColor")
+      if (!fontColor)
+        missing.push("fontColor")
+      if (!role)
+        missing.push("role")
+
+      if (missing.length > 0){
+        return res.status(400).render('register', {
+          error: `The missing fields are: ${missing.join(", ")}`
+        })
+      }
+
+      firstName = checkName(firstName)
+      lastName = checkName(lastName)
+      userId = checkUserId(userId)
+      password = checkPassword(password)
+      confirmPassword = checkPassword(confirmPassword)
+
+      if (password !== confirmPassword){
+        return res.status(400).render('register', {
+          error: "The passwords do not match"
+        })
+      }
+      
+      quote = checkQuote(quote)
+      const theme = {backgroundColor: backgroundColor, fontColor: fontColor}
+      theme = checkTheme(theme)
+      role = checkRole(role)
+
+      const registered = await register(firstName, lastName, userId, password, quote, theme, role)
+      if (registered.registrationCompleted){
+        return res.redirect('/login')
+      } else {
+        return res.status(500).render('error', {error: "Internal Server Error"})
+      }
+    } catch (e) {
+      return res.status(400).render('register', {
+        error: e
+      }) 
+    }
+     
   });
 
 router
@@ -33,6 +101,7 @@ router
   })
   .post(async (req, res) => {
     //code here for POST
+
   });
 
 router.route('/user').get(async (req, res) => {
