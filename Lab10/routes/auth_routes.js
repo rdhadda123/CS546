@@ -4,6 +4,7 @@ const router = Router()
 import bcrypt from "bcrypt"
 import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId } from "../helpers.js";
 import { login, register } from "../data/users.js";
+import { CursorTimeoutMode } from "mongodb";
 
 router.route('/').get(async (req, res) => {
   //code here for GET
@@ -143,6 +144,25 @@ router
 
 router.route('/user').get(async (req, res) => {
   //code here for GET
+  try {
+    const currentTime = new Date().toLocaleTimeString()
+    const currentDate = new Date().toLocaleDateString()
+
+    const user = req.session.user
+
+    res.render('user', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      currentTime: currentTime,
+      currentDate: currentDate,
+      role: user.role,
+      signupDate: user.signupDate,
+      lastLogin: user.lastLogin,
+      favoriteQuote: user.favoriteQuote
+    })
+  } catch (e) {
+    return res.status(400).render('error', {error: e})
+  }
 });
 
 router.route('/superuser').get(async (req, res) => {
