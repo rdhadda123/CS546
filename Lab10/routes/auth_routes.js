@@ -192,3 +192,5 @@ router.route('/signout').get(async (req, res) => {
   req.session.destroy()
   res.render('/signout')
 });
+
+export default router
