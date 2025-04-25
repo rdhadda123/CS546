@@ -173,7 +173,7 @@ router.route('/superuser').get(async (req, res) => {
 
     const user = req.session.user
 
-    res.render('user', {
+    res.render('superuser', {
       firstName: user.firstName,
       lastName: user.lastName,
       currentTime: currentTime,
@@ -189,4 +189,6 @@ router.route('/superuser').get(async (req, res) => {
 
 router.route('/signout').get(async (req, res) => {
   //code here for GET
+  req.session.destroy()
+  res.render('/signout')
 });
