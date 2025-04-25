@@ -3,7 +3,7 @@ import { Router } from "express";
 const router = Router()
 import bcrypt from "bcrypt"
 import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId } from "../helpers.js";
-import { register } from "../data/users.js";
+import { login, register } from "../data/users.js";
 
 router.route('/').get(async (req, res) => {
   //code here for GET
@@ -82,9 +82,7 @@ router
         return res.status(500).render('error', {error: "Internal Server Error"})
       }
     } catch (e) {
-      return res.status(400).render('register', {
-        error: e
-      }) 
+      return res.status(400).render('register', { error: e }) 
     }
      
   });
@@ -101,7 +99,39 @@ router
   })
   .post(async (req, res) => {
     //code here for POST
+    try{
+      const userId = req.body.userId
+      const password = req.body.password
+      if (!userId || !password){
+        return res.status(400).render('login', {
+          error: 'UserId or password not provided'
+        })
+      }
 
+      userId = checkUserId(userId)
+      password = checkPassword(password)
+
+      const user = await login(userId, password)
+        
+      req.session.user = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userId: user.userId,
+        favoriteQuote: user.favoriteQuote,
+        themePreference: user.themePreference,
+        role: user.role,
+        signupDate: user.signupDate,
+        lastLogin: user.lastLogin
+      }
+
+      if (user.role === "superuser"){
+        return res.redirect('/superuser')
+      } else if (user.role === "user"){
+        return res.redirect('/user')
+      }
+    } catch (e) {
+      return res.status(400).render('login', { error: e })
+    }
   });
 
 router.route('/user').get(async (req, res) => {
