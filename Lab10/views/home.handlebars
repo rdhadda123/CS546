@@ -1,0 +1,30 @@
+{{!--
+
+Home handelbars for '/' route
+
+--}}
+<h1 id="appTitle">Lab 10 - Login System</h1>
+
+<main>
+    <p id="siteDescription">
+    This is a login system for lab 10, the final lab of the semester. It allows users to register, log in, and navigate based on their roles. Normal users and superusers have different access levels.
+    </p>
+
+    {{#if user}}
+        {{#if user.role}}
+            {{#if (user.role "superuser")}}
+                <a id="userlink" href="/user">User Page</a>
+                <a id="superuserlink" href="/superuser">Super User Page</a>
+            {{else}}
+                <a id="userlink" href="/user">User Page</a>
+            {{/if}}
+        {{/if}}
+    {{else}}
+        <a id="signuplink" href="/register">Register Here</a>
+        <a id="loginlink" href="/login">Login Here</a>
+    {{/if}}
+
+    <footer>
+    <p>Rishabh Dhadda 10460208</p>
+    </footer>
+</main>
