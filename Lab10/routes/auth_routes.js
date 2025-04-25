@@ -167,6 +167,24 @@ router.route('/user').get(async (req, res) => {
 
 router.route('/superuser').get(async (req, res) => {
   //code here for GET
+  try {
+    const currentTime = new Date().toLocaleTimeString()
+    const currentDate = new Date().toLocaleDateString()
+
+    const user = req.session.user
+
+    res.render('user', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      currentTime: currentTime,
+      currentDate: currentDate,
+      signupDate: user.signupDate,
+      lastLogin: user.lastLogin,
+      favoriteQuote: user.favoriteQuote
+    })
+  } catch (e) {
+    return res.status(400).render('error', {error: e})
+  }
 });
 
 router.route('/signout').get(async (req, res) => {
