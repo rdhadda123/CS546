@@ -7,6 +7,13 @@ import { login, register } from "../data/users.js";
 
 router.route('/').get(async (req, res) => {
   //code here for GET
+  try {
+    return res.render('home', {
+      user: req.session.user || null
+    })
+  } catch (e) {
+    return res.status(500).render('error', { error: 'Internal Server Error' })
+  }
 });
 
 router
