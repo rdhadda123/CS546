@@ -6,53 +6,53 @@ registration handelbars
 
 <h1>Register</h1>
 {{#if error}}
-    <div>
+    <div class="error">
         {{error}}
     </div>
 {{/if}}
-<main>
+<main class="page-format">
     <form name="signup-form" id="signup-form" method="POST" action="/register">
-        <div>
+        <div class="form-format">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="lastName">Last Name:</label>
             <input type="text" id="lastName" name="lastName" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="userId">User ID:</label>
             <input type="text" id="userId" name="userId" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="favoriteQuote">Favorite Quote:</label>
             <input type="text" id="favoriteQuote" name="favoriteQuote">
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="backgroundColor">Background Color:</label>
             <input type="color" id="backgroundColor" name="backgroundColor">
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="fontColor">Font Color:</label>
             <input type="color" id="fontColor" name="fontColor">
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="role">Role:</label>
             <select id="role" name="role" required>
             <option value="superuser">Super User</option>
@@ -60,7 +60,7 @@ registration handelbars
             </select>
         </div>
 
-        <div>
+        <div class="form-format">
             <button type="submit" id="submitButton" name="submitButton">Sign Up</button>
         </div>
     </form>

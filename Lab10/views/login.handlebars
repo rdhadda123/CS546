@@ -5,18 +5,18 @@ login form handlebar template
 --}}
 <h1>Sign In</h1>
 {{#if error}}
-    <div>
+    <div class="error">
         {{error}}
     </div>
 {{/if}}
-<main>
+<main class="page-format">
     <form id="signin-form" method="POST" action="/login">
-        <div>
+        <div class="form-format">
             <label for="userId">User ID:</label>
             <input type="text" id="userId" name="userId" required>
         </div>
 
-        <div>
+        <div class="form-format">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
