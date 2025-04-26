@@ -4,7 +4,6 @@ const router = Router()
 import bcrypt from "bcrypt"
 import { checkName, checkPassword, checkQuote, checkRole, checkTheme, checkUserId } from "../helpers.js";
 import { login, register } from "../data/users.js";
-import { CursorTimeoutMode } from "mongodb";
 
 router.route('/').get(async (req, res) => {
   //code here for GET
@@ -30,17 +29,17 @@ router
   .post(async (req, res) => {
     //code here for POST
     try {
-      const firstName = req.body.firstName
-      const lastName = req.body.lastName
-      const userId = req.body.userId;
-      const password = req.body.password;
-      const confirmPassword = req.body.confirmPassword;
-      const quote = req.body.favoriteQuote;
-      const backgroundColor = req.body.backgroundColor;
-      const fontColor = req.body.fontColor;
-      const role = req.body.role;
+      let firstName = req.body.firstName
+      let lastName = req.body.lastName
+      let userId = req.body.userId;
+      let password = req.body.password;
+      let confirmPassword = req.body.confirmPassword;
+      let quote = req.body.favoriteQuote;
+      let backgroundColor = req.body.backgroundColor;
+      let fontColor = req.body.fontColor;
+      let role = req.body.role;
 
-      const missing = []
+      let missing = []
       if (!firstName)
         missing.push("firstName")
       if (!lastName)
@@ -79,7 +78,7 @@ router
       }
       
       quote = checkQuote(quote)
-      const theme = {backgroundColor: backgroundColor, fontColor: fontColor}
+      let theme = {backgroundColor: backgroundColor, fontColor: fontColor}
       theme = checkTheme(theme)
       role = checkRole(role)
 
@@ -90,6 +89,7 @@ router
         return res.status(500).render('error', {error: "Internal Server Error"})
       }
     } catch (e) {
+      console.log(e)
       return res.status(400).render('register', { error: e }) 
     }
      
@@ -108,8 +108,8 @@ router
   .post(async (req, res) => {
     //code here for POST
     try{
-      const userId = req.body.userId
-      const password = req.body.password
+      let userId = req.body.userId
+      let password = req.body.password
       if (!userId || !password){
         return res.status(400).render('login', {
           error: 'UserId or password not provided'
@@ -158,7 +158,8 @@ router.route('/user').get(async (req, res) => {
       role: user.role,
       signupDate: user.signupDate,
       lastLogin: user.lastLogin,
-      favoriteQuote: user.favoriteQuote
+      favoriteQuote: user.favoriteQuote,
+      isSuperUser: user.role === "superuser"
     })
   } catch (e) {
     return res.status(400).render('error', {error: e})

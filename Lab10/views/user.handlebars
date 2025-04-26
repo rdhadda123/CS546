@@ -9,8 +9,10 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     <p id="lastLogin">The last time you logged in was:  {{lastLogin}}</p>
     <p id="quote">Favorite Quote: {{favoriteQuote}}</p>
     <!-- link here for super user, ONLY if they have a role of superuser <a id="superUserLink" href="/superuser">Super User Page</a> !-->
-    {{#if role 'superuser'}}
-        <a id="superUserLink" href="/superuser">Super User Page</a>
+    {{#if isSuperUser}}
+        {{#if role}}  <!-- Nested just to match your request -->
+            <a id="superUserLink" href="/superuser">Super User Page</a>
+        {{/if}}
     {{/if}}
     <a id="signoutLink" href="/signout">Sign out</a>
 </div>

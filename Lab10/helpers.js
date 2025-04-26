@@ -66,9 +66,9 @@ export const checkTheme = (theme) => {
     if (!Object.keys(theme).includes("fontColor"))
         throw `${theme} must be have fontColor field`
 
-    if (typeof theme.backgroundColor !== "string" || /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(theme.backgroundColor))
+    if (typeof theme.backgroundColor !== "string" || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(theme.backgroundColor))
         throw `${theme.backgroundColor} is not a valid hex color`
-    if (typeof theme.fontColor !== "string" || /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(theme.fontColor))
+    if (typeof theme.fontColor !== "string" || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(theme.fontColor))
         throw `${theme.fontColor} is not a valid hex color`
     if (theme.backgroundColor.toLowerCase() === theme.fontColor.toLowerCase())
         throw `the background color and font color can not be the same`

@@ -75,7 +75,7 @@ app.use((req, res, next) => {
      const method = req.method
      const path = req.path
      const authenticated = req.session.user
-     const status = '(Non-Authenticated)'
+     let status = '(Non-Authenticated)'
      if (authenticated){
           if (req.session.user.role === 'superuser')
                status = '(Authenticated Super User)'
