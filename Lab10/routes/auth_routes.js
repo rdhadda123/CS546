@@ -10,9 +10,11 @@ router.route('/').get(async (req, res) => {
   try {
     const user = req.session.user || null
     const isSuperUser = user && user.role === "superuser"
+    const themePreference = user ? user.themePreference : { backgroundColor: 'white', fontColor: 'black' }
     return res.render('home', {
       user: user,
-      isSuperUser: isSuperUser
+      isSuperUser: isSuperUser,
+      themePreference: themePreference
     })
   } catch (e) {
     return res.status(500).render('error', { error: 'Internal Server Error' })
@@ -152,6 +154,7 @@ router.route('/user').get(async (req, res) => {
     const currentDate = new Date().toLocaleDateString()
 
     const user = req.session.user
+    const themePreference = user ? user.themePreference : { backgroundColor: 'white', fontColor: 'black' }
 
     res.render('user', {
       firstName: user.firstName,
@@ -162,7 +165,8 @@ router.route('/user').get(async (req, res) => {
       signupDate: user.signupDate,
       lastLogin: user.lastLogin,
       favoriteQuote: user.favoriteQuote,
-      isSuperUser: user.role === "superuser"
+      isSuperUser: user.role === "superuser",
+      themePreference: themePreference
     })
   } catch (e) {
     return res.status(400).render('error', {error: e})
@@ -176,6 +180,7 @@ router.route('/superuser').get(async (req, res) => {
     const currentDate = new Date().toLocaleDateString()
 
     const user = req.session.user
+    const themePreference = user ? user.themePreference : { backgroundColor: 'white', fontColor: 'black' }
 
     res.render('superuser', {
       firstName: user.firstName,
@@ -184,7 +189,8 @@ router.route('/superuser').get(async (req, res) => {
       currentDate: currentDate,
       signupDate: user.signupDate,
       lastLogin: user.lastLogin,
-      favoriteQuote: user.favoriteQuote
+      favoriteQuote: user.favoriteQuote,
+      themePreference: themePreference
     })
   } catch (e) {
     return res.status(400).render('error', {error: e})

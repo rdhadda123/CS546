@@ -9,7 +9,7 @@ for the theme, you can simply read the themePreference for the user and inject i
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/public/css/sitestyles.css">
     </head>
-    <body class="{{themePreference}}">
+    <body style="background-color: {{#if themePreference}}{{themePreference.backgroundColor}}{{else}}white{{/if}}; color: {{#if themePreference}}{{themePreference.fontColor}}{{else}}black{{/if}};">
         {{{body}}}
     </body>
     <script src="/public/js/form_validate.js"></script>
