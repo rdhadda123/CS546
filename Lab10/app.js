@@ -89,7 +89,7 @@ app.use((req, res, next) => {
 
 app.use('/login', (req, res, next) => {
      if (req.session.user){
-          if (req.session.user === 'superuser'){
+          if (req.session.user.role === 'superuser'){
                return res.redirect('/superuser')
           } else {
                return res.redirect('/user')
@@ -100,7 +100,7 @@ app.use('/login', (req, res, next) => {
 
 app.use('/register',(req, res, next) => {
      if (req.session.user){
-          if (req.session.user === 'superuser'){
+          if (req.session.user.role === 'superuser'){
                return res.redirect('/superuser')
           } else {
                return res.redirect('/user')

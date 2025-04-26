@@ -41,11 +41,11 @@ export const checkUserId = (userId) => {
 export const checkPassword = (password) => {
     password = checkString(password)
     if (password.includes(' '))
-        throw `${password} can't contain spaces`
+        throw `Password can't contain spaces`
     if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])/.test(password))
-        throw `${password} needs to have atleast one uppercase letter, one number, and one special character`
+        throw `Password needs to have atleast one uppercase letter, one number, and one special character`
     if (password.length < 8)
-        throw `${password} needs to be at least 8 characters long`
+        throw `Password needs to be at least 8 characters long`
     return password
 }
 

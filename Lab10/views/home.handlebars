@@ -12,7 +12,7 @@ Home handelbars for '/' route
 
     {{#if user}}
         {{#if user.role}}
-            {{#if (user.role "superuser")}}
+            {{#if isSuperUser}}
                 <a id="userlink" href="/user">User Page</a>
                 <a id="superuserlink" href="/superuser">Super User Page</a>
             {{else}}

@@ -8,8 +8,11 @@ import { login, register } from "../data/users.js";
 router.route('/').get(async (req, res) => {
   //code here for GET
   try {
+    const user = req.session.user || null
+    const isSuperUser = user && user.role === "superuser"
     return res.render('home', {
-      user: req.session.user || null
+      user: user,
+      isSuperUser: isSuperUser
     })
   } catch (e) {
     return res.status(500).render('error', { error: 'Internal Server Error' })
@@ -190,8 +193,12 @@ router.route('/superuser').get(async (req, res) => {
 
 router.route('/signout').get(async (req, res) => {
   //code here for GET
-  req.session.destroy()
-  res.render('/signout')
+  try {
+    req.session.destroy()
+    res.render('signout')
+  } catch (e) {
+    return res.status(500).render('error', { error: 'Internal Server Error' })
+  }
 });
 
 export default router

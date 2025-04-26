@@ -4,6 +4,11 @@ login form handlebar template
 
 --}}
 <h1>Sign In</h1>
+{{#if error}}
+    <div>
+        {{error}}
+    </div>
+{{/if}}
 <main>
     <form id="signin-form" method="POST" action="/login">
         <div>

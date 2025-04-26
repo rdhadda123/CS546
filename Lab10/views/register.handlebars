@@ -5,6 +5,11 @@ registration handelbars
 --}}
 
 <h1>Register</h1>
+{{#if error}}
+    <div>
+        {{error}}
+    </div>
+{{/if}}
 <main>
     <form name="signup-form" id="signup-form" method="POST" action="/register">
         <div>
