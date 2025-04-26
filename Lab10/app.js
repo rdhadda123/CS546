@@ -65,7 +65,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(
      session({
           name: 'AuthenticationState',
-          secret: "This is a secret.. shhh don't tell anyone",
+          secret: "some secret string!",
           saveUninitialized: false,
           resave: false
      })
